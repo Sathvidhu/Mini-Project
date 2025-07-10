@@ -221,6 +221,7 @@
 												<?php
         if(isset($_GET['search1'])){
             $email=$_GET['email'];
+			
             $conn=mysqli_connect('localhost','root','','smartstudy');
             $s="select * from registration where email='$email'";
             $result=mysqli_query($conn, $s);
@@ -321,31 +322,32 @@
                 }
             }
                     if(isset($_POST['save'])){
-                    $fname=$_POST['fname'];
-                    $class=$_POST['class'];
-                    $age=$_POST['age'];
-                    $email=$_POST['email'];
-                    $gender=$_POST['gender'];
-                      $conn=mysqli_connect("localhost","root","","smartstudy");
-                $s= "update registration set fname='$fname',class='$class',age='$age',email='$email' ,gender='$gender' where email='$email'";
-                mysqli_query($conn,$s);
-                if(mysqli_affected_rows($conn)>0){
-                    ?>
-                    <script>
-                    Swal.fire({
-                    title: "Success!",
-                    text: "Record updated successfully.",
-                    icon: "success",
-                    confirmButtonText: "OK"
-                    }).then(() => {
-                    window.location.href = "student.php?email=<?php echo $email; ?>&search=search";
-                    });
-                    </script>
-                    <?php
-                    
+    $fname = $_POST['fname'];
+    $class = $_POST['class'];
+    $age = $_POST['age'];
+    $email = $_POST['email'];
+    $gender = $_POST['gender'];
 
-                    }
-                }
+    $conn = mysqli_connect("localhost", "root", "", "smartstudy");
+    $s = "UPDATE registration SET fname='$fname', class='$class', age='$age', gender='$gender' WHERE email='$email'";
+
+    if (mysqli_query($conn, $s)) {
+        ?>
+        <script>
+        Swal.fire({
+            title: "Success!",
+            text: "Record saved (even if nothing changed).",
+            icon: "success",
+            confirmButtonText: "OK"
+        }).then(() => {
+            window.location.href = "student.php?email=<?php echo $email; ?>&search=search";
+        });
+        </script>
+        <?php
+    } else {
+        echo "Update failed: " . mysqli_error($conn);
+    }
+}
 
         ?>
 											</table>
