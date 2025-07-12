@@ -104,52 +104,81 @@
                     <th><a href="registration.php" style="text-decoration: none;">Don't Have An Account?</a></th>
                 </tr>
 <?php
-if(isset($_POST["submit"] ))
+if (isset($_POST['submit'])) {
+
+    /* ---- 1.  Connect safely ---------------------------------------------- */
+    $con = new mysqli('localhost', 'root', '', 'smartstudy');
+    if ($con->connect_error) {
+        die('Database error: ' . $con->connect_error);
+    }
+
+    /* ---- 2.  Pull & sanitise user input ---------------------------------- */
+    $email  = $_POST['email']  ?? '';
+    $pass1  = $_POST['pass1']  ?? '';
+    $email  = trim($email);
+    $pass1  = trim($pass1);
+
+    /* ---- 3.  Verify credentials with a prepared statement ---------------- */
+    $stmt = $con->prepare(
+        'SELECT attandance, last_attendance
+         FROM   registration
+         WHERE  email = ? AND pass1 = ?'
+    );
+    $stmt->bind_param('ss', $email, $pass1);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows === 0) {                // --- Wrong password ----
+        showAlert('error',
+                  'Login Not Successful!',
+                  'Incorrect password. Please try again.',
+                  'login.php');
+        exit;
+    }
+
+    /* ---- 4.  Decide whether to add today’s attendance -------------------- */
+    $row          = $result->fetch_assoc();
+    $today        = date('Y-m-d');                // set your timezone at top if needed
+    $attendance   = (int)$row['attandance'];
+    $lastMarked   = $row['last_attendance'];
+
+    if ($lastMarked !== $today) {                 // only first login of the day
+        $attendance++;
+
+        $upd = $con->prepare(
+            'UPDATE registration
+             SET    attandance      = ?,
+                    last_attendance = ?
+             WHERE  email = ?'
+        );
+        $upd->bind_param('iss', $attendance, $today, $email);
+        $upd->execute();
+    }
+
+    /* ---- 5.  Success feedback ------------------------------------------- */
+    showAlert('success',
+              'Login Successful!',
+              'Redirecting to Student Dashboard...',
+              'dashboard.php');
+}
+
+/* ---------- Re‑usable SweetAlert helper ---------------------------------- */
+function showAlert($icon, $title, $text, $redirect)
 {
-    
- $con=mysqli_connect("localhost","root","","smartstudy");
- extract($_POST);
- $s="select * from registration where email='$email' and pass1='$pass1'";
- $a=mysqli_query($con,$s);
- echo mysqli_affected_rows($con);
- if(mysqli_affected_rows($con)>0)
-  {
-    ?>
-        <script>
+    echo "
+      <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+      <script>
         Swal.fire({
-            icon: 'success',
-            title: 'Login Successful!',
-            text: 'Redirecting to admin dashboard...',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location = "dashboard.php";
-            }
-        });
-        </script>
-        <?php
-  }
-  else
-   {
-    ?>
-        <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Login Not Successful!',
-            text: 'Incorrect password. Please try again.',
-            confirmButtonColor: '#d33',
-            confirmButtonText: 'Retry'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location = "login.php";
-            }
-        });
-        </script>
-        <?php
-   }
+          icon: '$icon',
+          title: '$title',
+          text: '$text',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK'
+        }).then(() => window.location = '$redirect');
+      </script>";
 }
 ?>
+
         </form>
     
 </body>
