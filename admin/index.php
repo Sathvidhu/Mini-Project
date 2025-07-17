@@ -83,7 +83,7 @@ session_start();
 										</a>
 									</li>
 									<li>
-										<a href="#edit">
+										<a href="editprofile.php">
 											<span class="link-collapse">Edit Profile</span>
 										</a>
 									</li>
