@@ -1,3 +1,8 @@
+<?php
+session_start();
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,21 +34,22 @@
 						
 						
 						<li class="nav-item dropdown">
-							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span >Hizrian</span></span> </a>
+							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="profile.php" aria-expanded="false"> <img src="assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span ><?php echo $_SESSION["uname"];?></span></span> </a>
 							<ul class="dropdown-menu dropdown-user">
 								<li>
 									<div class="user-box">
 										<div class="u-img"><img src="assets/img/profile.jpg" alt="user"></div>
 										<div class="u-text">
-											<h4>Hizrian</h4>
-											<p class="text-muted">hello@themekita.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+											<h4><?php echo $_SESSION["uname"];?></h4>
+											<p class="text-muted">hello@themekita.com</p>
+											<a href="profile.php" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
 										</div>
 									</li>
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#"><i class="ti-user"></i> My Profile</a>
+									<a class="dropdown-item" href="profile.php"><i class="ti-user"></i>Messages</a>
 									<a class="dropdown-item" href="#"><i class="ti-email"></i> Inbox</a>
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a>
+									<a class="dropdown-item" href="adminsettings.php"><i class="ti-settings"></i> Account Setting</a>
 									<div class="dropdown-divider"></div>
 									<a class="dropdown-item" href="adminlogin.php"><i class="fa fa-power-off"></i> Logout</a>
 								</ul>
@@ -62,7 +68,7 @@
 						<div class="info">
 							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									Hizrian
+									<?php echo $_SESSION["uname"];?>
 									<span class="user-level">Administrator</span>
 									<span class="caret"></span>
 								</span>
@@ -72,7 +78,7 @@
 							<div class="collapse in" id="collapseExample" aria-expanded="true" style="">
 								<ul class="nav">
 									<li>
-										<a href="#profile">
+										<a href="profile.php">
 											<span class="link-collapse">My Profile</span>
 										</a>
 									</li>
@@ -82,7 +88,7 @@
 										</a>
 									</li>
 									<li>
-										<a href="#settings">
+										<a href="adminsettings.php">
 											<span class="link-collapse">Settings</span>
 										</a>
 									</li>
@@ -339,10 +345,16 @@
 											</div>
 										</div>
 										<div class="progress-card">
-											<div class="d-flex justify-content-between mb-1">
-												<span class="text-muted">Orders</span>
-												<span class="text-muted fw-bold"> 576</span>
-											</div>
+											<div class="card mb-3">
+  												<div class="card-header">
+    												<h6 class="mb-0">Calendar</h6>
+  												</div>
+
+  												<div class="card-body p-0">
+    												<div id="calendar"></div>
+  </div>
+</div>
+
 											<div class="progress mb-2" style="height: 7px;">
 												<div class="progress-bar bg-info" role="progressbar" style="width: 65%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="65%"></div>
 											</div>
@@ -629,7 +641,11 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				
+				<div class="modal-body text-center">									
+					<p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
+					<p>
+						<b>We'll let you know when it's done</b></p>
+				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
