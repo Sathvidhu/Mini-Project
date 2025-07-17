@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 
 <html>
     <head>
@@ -115,6 +118,9 @@ if(isset($_POST["submit"] ))
  if(mysqli_affected_rows($con)>0)
   {
     ?>
+    <?php
+$_SESSION["uname"]=$uname;
+?>
     <script>
         alert("LOGIN SUCCESFULL");
         window.location = "index.php";
@@ -135,27 +141,9 @@ if(isset($_POST["submit"] ))
    }
 }
 ?>
+
         </form>
     
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
