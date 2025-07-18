@@ -1,3 +1,9 @@
+<?php
+session_start();
+
+$email = $_SESSION['email'];
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -127,18 +133,28 @@
     </table>
     <?php
  if(isset($_POST["submit"] ))
-                {
+    {
  $corn = mysqli_connect("localhost","root","","smartstudy");
  extract ($_POST);
-  $d = "INSERT INTO registration (sname, time1, time2, physicsmark, chemistrymark, mathsmark, biologymark, extracurricular, hobbies)
-            VALUES ( '$sname', '$time1', '$time2', '$physicsmark', '$chemistrymark', '$mathsmark', '$biologymark', '$extracurricular', '$hobbies')";
+$d = "UPDATE registration SET 
+    sname = '$sname',
+    time1 = '$time1',
+    time2 = '$time2',
+    physicsmark = '$physicsmark',
+    chemistrymark = '$chemistrymark',
+    mathsmark = '$mathsmark',
+    biologymark = '$biologymark',
+    extracurricular = '$extracurricular',
+    hobbies = '$hobbies',
+    profile = 1
+WHERE email = '$email'";
  $a = mysqli_query($corn,$d);
   if($a){
     ?>
     <script>
     Swal.fire({
         icon: 'success',
-        title: 'Registration Successful!',
+        title: 'Profile Updated Successfully!',
         text: 'You will now be redirected to Dashboard.',
         //html: ''
         confirmButtonColor: '#3085d6',
@@ -148,15 +164,17 @@
             window.location = "dashboard.php";
         }
     });
+    $profileOk++; // Set profileOk to 1 to indicate profile completion
 </script>
+
 
       <?php
   }
   else{
     ?>
     <script>
-        alert("Not Registered");
-        window.location ="registeration.php";
+        alert("Profile Not Updated");
+        window.location ="profile.php";
         </script>
         <?php
   }
