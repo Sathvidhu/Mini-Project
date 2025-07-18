@@ -1,13 +1,83 @@
+<?php
+session_start();
+$email = $_SESSION['email'];
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <title>SMART-STUDY PLANNER</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
+    <script>
+        let startTime = Date.now();
+        window.addEventListener('beforeunload', function () {
+        let endTime = Date.now();
+        let timeSpent = Math.floor((endTime - startTime) / 1000);
+         navigator.sendBeacon('track_time.php', new URLSearchParams({
+        time_spent: timeSpent
+    }));
+});
+</script>
+<script>
+    std-nm {
+        text-align: right;
+        color: white;
+        font-size: 20px;
+        margin-top: 10px;
+    }
+</script>
 
+<script>
+
+<?php
+ $con=mysqli_connect("localhost","root","","smartstudy");
+ extract($_POST);
+ $attandance = 0;
+ $s="select * from registration where attandance='$attandance'";
+ $a=mysqli_query($con,$s);
+ echo mysqli_affected_rows($con);
+ if($attandance == 1)
+  {
+    ?>
+        <script>
+        Swal.fire({
+            icon: 'info',
+            title: 'Complete Your Profile',
+            text: 'Redirecting to Profile Page...',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = "Profile.php";
+            }
+        });
+        </script>
+        <?php
+  }
+  else
+   {
+    ?>  
+        <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error On Profile!',
+            text: 'Incorrect password. Please try again.',
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Retry'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = "login.php";
+            }
+        });
+        </script>
+        <?php
+   }
+
+?>
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -28,18 +98,23 @@
 <body>
     <!-- Topbar Start -->
      <div class="container-fluid bg-dark">
-        <div class="row py-2 px-lg-5">
-            <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
-                <div class="d-inline-flex align-items-center text-white">
-                    <small><i class="fa fa-phone-alt mr-2"></i>+918882282828</small>
-                    <small class="px-3">|</small>
-                    <small><i class="fa fa-envelope mr-2"></i>smartstudy@gmail.com</small>
-                </div>
+    <div class="row py-2 px-lg-5 align-items-center">
+        <!-- Left side -->
+        <div class="col-lg-6 text-center text-lg-left mb-2 mb-lg-0">
+            <div class="d-inline-flex align-items-center text-white">
+                <small><i class="fa fa-phone-alt mr-2"></i>+918882282828</small>
+                <small class="px-3">|</small>
+                <small><i class="fa fa-envelope mr-2"></i>smartstudy@gmail.com</small>
             </div>
-            
+        </div>
+
+        <!-- Right side -->
+        <div class="col-lg-6 text-center text-lg-right text-white">
+            <small><i class="fa fa-user mr-2"></i>Welcome <?php echo $email; ?></small>
         </div>
     </div>
-    <!-- Topbar End -->
+</div>
+
 
 
     <!-- Navbar Start -->
@@ -53,9 +128,9 @@
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <!--<div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
+            <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
                 <div class="navbar-nav mx-auto py-0">
-                    <a href="index.html" class="nav-item nav-link">Home</a>
+                    <!--<a href="index.html" class="nav-item nav-link">Home</a>
                     <a href="about.html" class="nav-item nav-link">Subjects</a>
                     <a href="course.html" class="nav-item nav-link active">Qes</a>
                     <div class="nav-item dropdown">
@@ -67,10 +142,10 @@
                             <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                         </div>
                     </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>-->
                 </div>
-                <a href="" class="btn btn-primary py-2 px-4 d-none d-lg-block">Join Us</a>
-            </div>-->
+                <a href="login.php" class="btn btn-primary py-2 px-4 d-none d-lg-block">LOG OUT</a>
+            </div>
         </nav>
     </div>
     <!-- Navbar End -->
