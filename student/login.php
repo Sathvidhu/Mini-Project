@@ -1,3 +1,8 @@
+<?php
+session_start();
+// Initialize email session variable
+?>
+
 
 <html>
     <head>
@@ -104,23 +109,24 @@
                     <th><a href="registration.php" style="text-decoration: none;">Don't Have An Account?</a></th>
                 </tr>
 <?php
-if (isset($_POST['submit'])) {
+if(isset($_POST['submit'])) {
 
-    /* ---- 1.  Connect safely ---------------------------------------------- */
-    $con = new mysqli('localhost', 'root', '', 'smartstudy');
-    if ($con->connect_error) {
-        die('Database error: ' . $con->connect_error);
+    // 1. Connect to DB
+    $conn = new mysqli('localhost', 'root', '', 'smartstudy');
+    if ($conn->connect_error) {
+        die('DB error: ' . $conn->connect_error);
     }
 
-    /* ---- 2.  Pull & sanitise user input ---------------------------------- */
-    $email  = $_POST['email']  ?? '';
-    $pass1  = $_POST['pass1']  ?? '';
-    $email  = trim($email);
-    $pass1  = trim($pass1);
+    // 2. Get and sanitize input
+    $email = trim($_POST['email'] ?? '');
+    $pass1 = trim($_POST['pass1'] ?? '');
 
-    /* ---- 3.  Verify credentials with a prepared statement ---------------- */
-    $stmt = $con->prepare(
-        'SELECT attandance, last_attendance
+    // 3. Store email in session AFTER it's defined
+    $_SESSION['email'] = $email;
+
+    // 4. Verify credentials
+    $stmt = $conn->prepare(
+        'SELECT attandance, last_attendance, profile
          FROM   registration
          WHERE  email = ? AND pass1 = ?'
     );
@@ -128,7 +134,7 @@ if (isset($_POST['submit'])) {
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result->num_rows === 0) {                // --- Wrong password ----
+    if ($result->num_rows === 0) {
         showAlert('error',
                   'Login Not Successful!',
                   'Incorrect password. Please try again.',
@@ -136,48 +142,67 @@ if (isset($_POST['submit'])) {
         exit;
     }
 
-    /* ---- 4.  Decide whether to add today’s attendance -------------------- */
-    $row          = $result->fetch_assoc();
-    $today        = date('Y-m-d');                // set your timezone at top if needed
-    $attendance   = (int)$row['attandance'];
-    $lastMarked   = $row['last_attendance'];
+    $row        = $result->fetch_assoc();
+    $today      = date('Y-m-d');
+    $attendance = (int)$row['attandance'];
+    $lastMarked = $row['last_attendance'];
+    $profileOk  = (int)$row['profile']; // use this variable below too
 
-    if ($lastMarked !== $today) {                 // only first login of the day
+    // 5. Mark attendance once per day
+    if ($lastMarked !== $today) {
         $attendance++;
-
-        $upd = $con->prepare(
+        $upd = $conn->prepare(
             'UPDATE registration
-             SET    attandance      = ?,
-                    last_attendance = ?
-             WHERE  email = ?'
+             SET attandance = ?, last_attendance = ?
+             WHERE email = ?'
         );
         $upd->bind_param('iss', $attendance, $today, $email);
         $upd->execute();
     }
 
-    /* ---- 5.  Success feedback ------------------------------------------- */
-    showAlert('success',
-              'Login Successful!',
-              'Redirecting to Student Dashboard...',
-              'dashboard.php');
+    // 6. Check profile status from database again if needed
+    // (You already have it in $profileOk from above)
+    if ($profileOk == 0 && !isset($_SESSION['profile_prompt_shown'])) {
+        $_SESSION['profile_prompt_shown'] = true;
+        echo "<script>
+            Swal.fire({
+                icon: 'info',
+                title: 'Complete Your Profile',
+                text: 'Please fill in the missing details.',
+            }).then(() => {
+                window.location.href = 'profile.php';
+            });
+        </script>";
+    } else {
+        showAlert('success',
+                  'Login Successful!',
+                  'Redirecting to Student Dashboard...',
+                  'dashboard.php');
+    }
 }
 
-/* ---------- Re‑usable SweetAlert helper ---------------------------------- */
-function showAlert($icon, $title, $text, $redirect)
-{
+
+// ✅ Define showAlert() AFTER your login logic and outside any if-block
+
+function showAlert($icon, $title, $text, $redirect) {
     echo "
-      <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
-      <script>
+    <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+    <script>
         Swal.fire({
-          icon: '$icon',
-          title: '$title',
-          text: '$text',
-          confirmButtonColor: '#3085d6',
-          confirmButtonText: 'OK'
-        }).then(() => window.location = '$redirect');
-      </script>";
+            icon: '$icon',
+            title: '$title',
+            text: '$text',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = '$redirect';
+        });
+    </script>";
 }
+
+
 ?>
+
 
         </form>
     
