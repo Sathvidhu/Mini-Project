@@ -9,6 +9,110 @@
 	<link rel="stylesheet" href="assets/css/ready.css">
 	<link rel="stylesheet" href="assets/css/demo.css">
 	 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	 <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .search-container {
+            margin: 10px ;
+            width: 350px;
+            padding: 10px;
+            background-color: #fffefeff;
+            border-radius: 10px;
+           
+            text-align: center;
+        }
+
+        .search-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .search-container input[type="email"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .search-container input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-container input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+	<style>
+    /* Style only the table with class 'student-table' */
+    table.student-table {
+        width: 90%;
+        margin: 30px auto;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    table.student-table th {
+        background-color: #323b2eff;
+        color: #fff;
+        padding: 12px;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    table.student-table td {
+        padding: 10px 12px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        font-size: 14px;
+    }
+
+    table.student-table tr:hover {
+        background-color: #f2f2f2;
+    }
+
+    table.student-table td input[type="button"] {
+        padding: 6px 14px;
+        margin: 4px;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    table.student-table td a:first-child input[type="button"] {
+        background-color: #28a745;
+        color: white;
+    }
+
+    table.student-table td a:first-child input[type="button"]:hover {
+        background-color: #218838;
+    }
+
+    table.student-table td a:last-child input[type="button"] {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    table.student-table td a:last-child input[type="button"]:hover {
+        background-color: #c82333;
+    }
+</style>
 </head>
 <body>
 	<div class="wrapper">
@@ -171,28 +275,24 @@
 							<a href="index.php">
 								<i class="la la-dashboard"></i>
 								<p>Dashboard</p>
-								<span class="badge badge-count">5</span>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href="student.php">
 								<i class="la la-table"></i>
 								<p>Student Details</p>
-								<span class="badge badge-count">14</span>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href="parent.php">
 								<i class="la la-keyboard-o"></i>
 								<p>Parent Details</p>
-								<span class="badge badge-count">50</span>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href="material.php">
 								<i class="la la-th"></i>
 								<p>Materials</p>
-								<span class="badge badge-count">6</span>
 							</a>
 						</li>
 					</ul>
@@ -209,17 +309,17 @@
 										<h4 class="card-title">Student Details</h4>
 										<p class="card-category">Search By E-Mail</p>
 									</div>
-									<div class="card-body" >
-										<form action="" method="get">
-											<th>Email</th>
-											<br>
-											<td><input type="email" placeholder="E-mail" name="email"></td>
-											<td colspan="2"><input type="submit" value="search" id="btn" name="search1"></td>
-										     
-	 									</form>
+									<div class="search-container">
+        								
+        								<form method="get" action="">
+            								<input type="email" name="email" placeholder="Enter Email Address" required>
+            								<br>
+            								<input type="submit" name="search1" value="Search">
+        								</form>
+    								</div>
 											<table>
 												<?php
-        if(isset($_GET['search1'])){
+        if (isset($_GET['search1'])){
             $email=$_GET['email'];
 			
             $conn=mysqli_connect('localhost','root','','smartstudy');
@@ -228,14 +328,16 @@
             if(mysqli_num_rows($result)>0){
                 while($row=mysqli_fetch_array($result)){
                     ?>
-                <table border="1" >
+                <table border="1" class="student-table" >
                 <th>fname</th>
                 <th>class</th>
                 <th>age</th>
                 <th>email</th> 
                 <th>gender</th>
+				<th>School Name</th>
+				
                 
-                <th id="action">Action</th>
+                <th id="action" style="text: center">Action</th>
             </tr>
              <tr>
                 <td><?php echo $row['fname']; ?></td>
@@ -243,8 +345,7 @@
                 <td><?php echo $row['age']; ?></td>
                 <td><?php echo $row['email']; ?></td>
                 <td><?php echo $row['gender']; ?></td>
-                
-                
+				<td><?php echo $row['sname']; ?></td>
                 <td id="action"><a href="student.php?edit=<?php echo $row['email'];  ?>"> <input style="margin-left: 30px;" type="button" value="Edit"></a>
                   <a href="student.php?delete=<?php echo $row['email'];  ?>">  <input style="margin-left: 20px;" type="button" value="Delete"></a></td>
             </tr>
@@ -292,13 +393,13 @@
                 while($row=mysqli_fetch_array($result)){
                     ?>
                     <form action="" method="post">
-                        <table align="center">
+                        <table align="center"class="student-table">
                             <tr>
                                 <td>First Name:</td>
                                 <td><input type="text" name="fname" value="<?php echo $row['fname']; ?>"></td>
                             </tr>
                             <tr>
-                                <td>Last Name:</td>
+                                <td>class:</td>
                                 <td><input type="text" name="class" value="<?php echo $row['class']; ?>"></td>
                             </tr>
                             <tr>
@@ -309,13 +410,17 @@
                                 <td>Mobile:</td>
                                 <td><input type="text" name="email" value="<?php echo $row['email']; ?>"></td>
                             </tr>
+							<tr>
+                                <td>Age:</td>
+                                <td><input type="text" name="age" value="<?php echo $row['age']; ?>"></td>
+                            </tr>
                             <tr>
-                                <td>Gender</td>
+                                <td>Gender:</td>
                                 <td><input type="text" name="gender" value="<?php echo $row['gender']; ?>"></td>
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><input type="submit" name="save" value="Save"></td>
+                                <td><input type="submit" name="save" value="Save" style="background-color: #137c9cff; color: white; padding: 10px 20px; border: none; border-radius: 5px;"></td>
                             </tr>
    
                 <?php
