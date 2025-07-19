@@ -90,20 +90,23 @@
         <form method = "post" action="" onsubmit = "return checkpass();">
             <table align = "center">
                 <tr>
-                 <h1 align = "center">
+                    <h1 align = "center">
                       Registration Form
-                </h1>
+                    </h1>
                 </tr>
-             <tr>
-                <td>Name</td>
-                <td><input type="text" placeholder = "NAME" id = "nm" name = "fname" required></td>
-             </tr>
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" placeholder = "NAME" id = "nm" name = "fname" required></td>
+                </tr>
                <tr>
-                <td>Class</td>
-                <td><input type="radio" name = "class">Vll
-                     <input type="radio" name="class" id="cl">lX
-                     <input type="radio" name="class" id="">X</td>
+                    <td>Class</td>
+                    <td>
+                        <input type="radio" value="8" name="class" required>VIII
+                        <input type="radio" value="9" name="class">IX
+                        <input type="radio" value="10" name="class">X
+                    </td>
                </tr>
+
                <tr>
                 <td>
                     Age
@@ -121,14 +124,13 @@
                 </td>
                </tr>
                <tr>
-                <td>
-                    Gender
-                </td>
-                <td>
-                    <input type="radio" id ="gnd" name = "gender">Male
-                    <input type="radio" id="gnd" name = "gender">Female
-                </td>
-               </tr>
+                <td>Gender</td>
+                    <td>
+                        <input type="radio" name="gender" value="Male" required>Male
+                        <input type="radio" name="gender" value="Female">Female
+                    </td>
+                </tr>
+
                <tr>
                 <td> Password </td>
                 <td><input type="password" id = "pass1" name="pass1"placeholder = "Password" ></td>
@@ -161,7 +163,7 @@
     Swal.fire({
         icon: 'success',
         title: 'Registration Successful!',
-        text: 'You will now be redirected to login page.Email:<?php echo $email; ?>Password:<?php echo $pass1; ?>',
+        text: 'You will now be redirected to login page.\nEmail:<?php echo $email; ?>\nPassword:<?php echo $pass1; ?>',
         //html: ''
         confirmButtonColor: '#3085d6',
         confirmButtonText: 'OK'
