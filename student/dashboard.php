@@ -1,12 +1,17 @@
 <?php
 session_start();
 $email = $_SESSION['email'];
+$fname = $_SESSION['fname'] ?? 'Guest';
+$class = $_SESSION['class'] ?? 'N/A';
 ?>
 
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <meta charset="utf-8">
     <title>SMART-STUDY PLANNER</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -30,6 +35,13 @@ $email = $_SESSION['email'];
         margin-top: 10px;
     }
 </script>
+<script>
+function selectSubject(subject) {
+  document.getElementById('selectedSubject').value = subject;
+  document.getElementById('subjectForm').submit();
+}
+</script>
+
 
 <script>
 
@@ -96,6 +108,9 @@ $email = $_SESSION['email'];
 </head>
 
 <body>
+<!-- Bootstrap JS Bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Topbar Start -->
      <div class="container-fluid bg-dark">
     <div class="row py-2 px-lg-5 align-items-center">
@@ -110,7 +125,7 @@ $email = $_SESSION['email'];
 
         <!-- Right side -->
         <div class="col-lg-6 text-center text-lg-right text-white">
-            <small><i class="fa fa-user mr-2"></i>Welcome <?php echo $email; ?></small>
+            <small><i class="fa fa-user mr-2"></i>Welcome <?php echo $fname; ?> </small>
         </div>
     </div>
 </div>
@@ -180,16 +195,37 @@ $email = $_SESSION['email'];
             </div>
             <div class="row">
                 <div class="col-lg-4 col-md-6 pb-4">
-                    <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="videoclass.php">
+                    <a href="#" class="courses-list-item position-relative d-block overflow-hidden mb-2" data-bs-toggle="modal" data-bs-target="#subjectModal">
                         <img class="img-fluid" src="img/courses-1.jpg" alt="">
                         <div class="courses-text">
-                            <h4 class="text-center text-white px-3">Video Classes</h4>
-                            <div class="border-top w-100 mt-3">
-                                
-                            </div>
+                        <h4 class="text-center text-white px-3">Video Classes</h4>
+                        <div class="border-top w-100 mt-3"></div>
                         </div>
                     </a>
                 </div>
+
+                
+                <div class="modal fade" id="subjectModal" tabindex="-1" aria-labelledby="subjectModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="subjectModalLabel">Choose a Subject</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <form id="subjectForm" method="GET" action="videoclass.php">
+                        <input type="hidden" name="subject" id="selectedSubject" value="">
+                        <button type="button" class="btn btn-outline-primary m-2" onclick="selectSubject('Physics')">Physics</button>
+                        <button type="button" class="btn btn-outline-success m-2" onclick="selectSubject('Chemistry')">Chemistry</button>
+                        <button type="button" class="btn btn-outline-danger m-2" onclick="selectSubject('Biology')">Biology</button>
+                        <button type="button" class="btn btn-outline-warning m-2" onclick="selectSubject('Maths')">Maths</button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            
+
                 <div class="col-lg-4 col-md-6 pb-4">
                     <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="mocktest.php">
                         <img class="img-fluid" src="img/courses-2.jpg" alt="">
