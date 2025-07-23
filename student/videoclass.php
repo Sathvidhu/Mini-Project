@@ -1,3 +1,10 @@
+<?php
+session_start();
+$class = $_SESSION['class'] ?? 'N/A';
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,6 +29,19 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <script>
+function playVideo(videoId) {
+    const frame = document.getElementById('videoFrame');
+    const container = document.getElementById('videoPlayerContainer');
+
+    frame.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1';
+    container.style.display = 'block';
+
+    // Optional smooth scroll to player
+    container.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
 </head>
 
 <body>
@@ -45,6 +65,7 @@
     <div class="container-fluid p-0">
         <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
             <a href="index.html" class="navbar-brand ml-lg-3">
+                
                 <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-user-graduate mr-3"></i>Smart Studey Planner</h1>
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -60,8 +81,16 @@
 
 
     <!-- Header Start -->
+<!--Class 8-->
+     <?php
+$subject = $_GET['subject'] ?? '';
+
+// Optional: Normalize subject name for case-insensitive match
+$subject = ucfirst(strtolower($subject));
+?>
+    <?php if (($subject == "Physics") && ($class == "8")): ?>
     <div class="container py-5">
-    <h1 class="text-center text-primary mb-4">Video Classes</h1>
+    <h1 class="text-center text-primary mb-4">Physics Video Classes For Class 8</h1>
     <div class="table-responsive">
         <table class="table table-bordered table-striped text-center">
             <thead class="thead-dark">
@@ -104,10 +133,533 @@
     </div>
 </div>
 
+
+
+<?php elseif (($subject == "Chemistry") && ($class == "8")): ?>
+<div class="container py-5">
+    <h1 class="text-center text-primary mb-4">Chemistry Video Classes For Class 8</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Chapter Name</th>
+                    <th>YouTube Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Chapter 1: Introduction</td>
+                    <td><a href="https://youtu.be/abc123" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 2: Basics</td>
+                    <td><a href="https://youtu.be/def456" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 3: Data Structures</td>
+                    <td><a href="https://youtu.be/ghi789" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 4: Functions</td>
+                    <td><a href="https://youtu.be/jkl012" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 5: OOP Concepts</td>
+                    <td><a href="https://youtu.be/mno345" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 6: File Handling</td>
+                    <td><a href="https://youtu.be/pqr678" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 7: Final Project</td>
+                    <td><a href="https://youtu.be/stu901" target="_blank">Watch Video</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<?php elseif (($subject == "Biology") && ($class == "8")): ?>
+<div class="container py-5">
+    <h1 class="text-center text-primary mb-4">Biology Video Classes For Class 8</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Chapter Name</th>
+                    <th>YouTube Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+    <td>Chapter 1: Introduction</td>
+    <td>
+        <button class="btn btn-sm btn-primary" onclick="playVideo('abc123')">Watch Video</button>
+    </td>
+</tr>
+
+                <tr>
+                    <td>Chapter 2: Basics</td>
+                    <td><a href="https://youtu.be/def456" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 3: Data Structures</td>
+                    <td><a href="https://youtu.be/ghi789" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 4: Functions</td>
+                    <td><a href="https://youtu.be/jkl012" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 5: OOP Concepts</td>
+                    <td><a href="https://youtu.be/mno345" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 6: File Handling</td>
+                    <td><a href="https://youtu.be/pqr678" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 7: Final Project</td>
+                    <td><a href="https://youtu.be/stu901" target="_blank">Watch Video</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<?php elseif (($subject == "Maths") && ($class == "8")): ?>
+<div class="container py-5">
+    <h1 class="text-center text-primary mb-4">Maths Video Classes For Class 8</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Chapter Name</th>
+                    <th>YouTube Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Chapter 1: Introduction</td>
+                    <td><a href="https://youtu.be/abc123" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 2: Basics</td>
+                    <td><a href="https://youtu.be/def456" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 3: Data Structures</td>
+                    <td><a href="https://youtu.be/ghi789" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 4: Functions</td>
+                    <td><a href="https://youtu.be/jkl012" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 5: OOP Concepts</td>
+                    <td><a href="https://youtu.be/mno345" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 6: File Handling</td>
+                    <td><a href="https://youtu.be/pqr678" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 7: Final Project</td>
+                    <td><a href="https://youtu.be/stu901" target="_blank">Watch Video</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!--Class 9-->
+<?php elseif (($subject == "Physics") && ($class == "9")): ?>
+    <div class="container py-5">
+    <h1 class="text-center text-primary mb-4">Physics Video Classes For Class 9</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Chapter Name</th>
+                    <th>YouTube Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Chapter 1: Introduction</td>
+                    <td><a href="https://youtu.be/abc123" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 2: Basics</td>
+                    <td><a href="https://youtu.be/def456" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 3: Data Structures</td>
+                    <td><a href="https://youtu.be/ghi789" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 4: Functions</td>
+                    <td><a href="https://youtu.be/jkl012" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 5: OOP Concepts</td>
+                    <td><a href="https://youtu.be/mno345" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 6: File Handling</td>
+                    <td><a href="https://youtu.be/pqr678" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 7: Final Project</td>
+                    <td><a href="https://youtu.be/stu901" target="_blank">Watch Video</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<?php elseif (($subject == "Chemistry") && ($class == "9")): ?>
+<div class="container py-5">
+    <h1 class="text-center text-primary mb-4">Chemistry Video Classes For Class 9</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Chapter Name</th>
+                    <th>YouTube Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Chapter 1: Introduction</td>
+                    <td><a href="https://youtu.be/abc123" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 2: Basics</td>
+                    <td><a href="https://youtu.be/def456" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 3: Data Structures</td>
+                    <td><a href="https://youtu.be/ghi789" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 4: Functions</td>
+                    <td><a href="https://youtu.be/jkl012" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 5: OOP Concepts</td>
+                    <td><a href="https://youtu.be/mno345" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 6: File Handling</td>
+                    <td><a href="https://youtu.be/pqr678" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 7: Final Project</td>
+                    <td><a href="https://youtu.be/stu901" target="_blank">Watch Video</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<?php elseif (($subject == "Biology") && ($class == "9")): ?>
+<div class="container py-5">
+    <h1 class="text-center text-primary mb-4">Biology Video Classes For Class 9</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Chapter Name</th>
+                    <th>YouTube Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Chapter 1: Introduction</td>
+                    <td><a href="https://youtu.be/abc123" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 2: Basics</td>
+                    <td><a href="https://youtu.be/def456" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 3: Data Structures</td>
+                    <td><a href="https://youtu.be/ghi789" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 4: Functions</td>
+                    <td><a href="https://youtu.be/jkl012" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 5: OOP Concepts</td>
+                    <td><a href="https://youtu.be/mno345" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 6: File Handling</td>
+                    <td><a href="https://youtu.be/pqr678" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 7: Final Project</td>
+                    <td><a href="https://youtu.be/stu901" target="_blank">Watch Video</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<?php elseif (($subject == "Maths") && ($class == "9")): ?>
+<div class="container py-5">
+    <h1 class="text-center text-primary mb-4">Maths Video Classes For Class 9</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Chapter Name</th>
+                    <th>YouTube Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Chapter 1: Introduction</td>
+                    <td><a href="https://youtu.be/abc123" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 2: Basics</td>
+                    <td><a href="https://youtu.be/def456" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 3: Data Structures</td>
+                    <td><a href="https://youtu.be/ghi789" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 4: Functions</td>
+                    <td><a href="https://youtu.be/jkl012" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 5: OOP Concepts</td>
+                    <td><a href="https://youtu.be/mno345" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 6: File Handling</td>
+                    <td><a href="https://youtu.be/pqr678" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 7: Final Project</td>
+                    <td><a href="https://youtu.be/stu901" target="_blank">Watch Video</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!--class 10-->
+
+<?php elseif (($subject == "Physics") && ($class == "10")): ?>
+    <div class="container py-5">
+    <h1 class="text-center text-primary mb-4">Physics Video Classes For Class 10</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Chapter Name</th>
+                    <th>YouTube Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+    <td>Chapter 1: Introduction</td>
+    <td>
+        <button class="btn btn-sm btn-primary" onclick="playVideo('Llss1aRo8tw')">Watch Video</button>
+    </td>
+</tr>
+                <tr>
+                    <td>Chapter 2: Basics</td>
+                    <td><a href="https://youtu.be/def456" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 3: Data Structures</td>
+                    <td><a href="https://youtu.be/ghi789" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 4: Functions</td>
+                    <td><a href="https://youtu.be/jkl012" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 5: OOP Concepts</td>
+                    <td><a href="https://youtu.be/mno345" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 6: File Handling</td>
+                    <td><a href="https://youtu.be/pqr678" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 7: Final Project</td>
+                    <td><a href="https://youtu.be/stu901" target="_blank">Watch Video</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<?php elseif (($subject == "Chemistry") && ($class == "10")): ?>
+<div class="container py-5">
+    <h1 class="text-center text-primary mb-4">Chemistry Video Classes For Class 10</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Chapter Name</th>
+                    <th>YouTube Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Chapter 1: Introduction</td>
+                    <td><a href="https://youtu.be/abc123" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 2: Basics</td>
+                    <td><a href="https://youtu.be/def456" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 3: Data Structures</td>
+                    <td><a href="https://youtu.be/ghi789" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 4: Functions</td>
+                    <td><a href="https://youtu.be/jkl012" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 5: OOP Concepts</td>
+                    <td><a href="https://youtu.be/mno345" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 6: File Handling</td>
+                    <td><a href="https://youtu.be/pqr678" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 7: Final Project</td>
+                    <td><a href="https://youtu.be/stu901" target="_blank">Watch Video</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<?php elseif (($subject == "Biology") && ($class == "10")): ?>
+<div class="container py-5">
+    <h1 class="text-center text-primary mb-4">Biology Video Classes For Class 10</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Chapter Name</th>
+                    <th>YouTube Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Chapter 1: Introduction</td>
+                    <td><a href="https://youtu.be/abc123" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 2: Basics</td>
+                    <td><a href="https://youtu.be/def456" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 3: Data Structures</td>
+                    <td><a href="https://youtu.be/ghi789" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 4: Functions</td>
+                    <td><a href="https://youtu.be/jkl012" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 5: OOP Concepts</td>
+                    <td><a href="https://youtu.be/mno345" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 6: File Handling</td>
+                    <td><a href="https://youtu.be/pqr678" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 7: Final Project</td>
+                    <td><a href="https://youtu.be/stu901" target="_blank">Watch Video</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<?php elseif (($subject == "Maths") && ($class == "10")): ?>
+<div class="container py-5">
+    <h1 class="text-center text-primary mb-4">Maths Video Classes For Class 10</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Chapter Name</th>
+                    <th>YouTube Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Chapter 1: Introduction</td>
+                    <td><a href="https://youtu.be/abc123" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 2: Basics</td>
+                    <td><a href="https://youtu.be/def456" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 3: Data Structures</td>
+                    <td><a href="https://youtu.be/ghi789" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 4: Functions</td>
+                    <td><a href="https://youtu.be/jkl012" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 5: OOP Concepts</td>
+                    <td><a href="https://youtu.be/mno345" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 6: File Handling</td>
+                    <td><a href="https://youtu.be/pqr678" target="_blank">Watch Video</a></td>
+                </tr>
+                <tr>
+                    <td>Chapter 7: Final Project</td>
+                    <td><a href="https://youtu.be/stu901" target="_blank">Watch Video</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<?php else: ?>
+    <div class="container py-5">
+        <h1 class="text-center text-danger">Subject Not Found</h1>
+        <p class="text-center">Please go back and select a valid subject.</p>
+    </div>
+<?php endif; ?>
+
     <!-- Header End -->
-
-
-    
+     <div id="videoPlayerContainer" class="mt-4" style="display: none;">
+    <h4>Now Playing:</h4>
+    <div class="ratio ratio-16x9">
+        <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+    </div>
+</div>
 
 
     <!-- Footer Start -->
