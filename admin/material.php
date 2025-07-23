@@ -115,12 +115,11 @@
 									</li>
 									<div class="dropdown-divider"></div>
 									<a class="dropdown-item" href="#"><i class="ti-user"></i> My Profile</a>
-									<a class="dropdown-item" href="#"></i> My Balance</a>
 									<a class="dropdown-item" href="#"><i class="ti-email"></i> Inbox</a>
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a>
+									<a class="dropdown-item" href="settings.php"><i class="ti-settings"></i> Account Setting</a>
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> Logout</a>
+									<a class="dropdown-item" href="adminlogin.php"><i class="fa fa-power-off"></i> Logout</a>
 								</ul>
 								<!-- /.dropdown-user -->
 							</li>
@@ -170,28 +169,25 @@
 							<a href="index.php">
 								<i class="la la-dashboard"></i>
 								<p>Dashboard</p>
-								<span class="badge badge-count">5</span>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href="student.php">
 								<i class="la la-table"></i>
 								<p>Student Details</p>
-								<span class="badge badge-count">14</span>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href="parent.php">
 								<i class="la la-keyboard-o"></i>
 								<p>Parent Details</p>
-								<span class="badge badge-count">50</span>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href="material.php">
 								<i class="la la-th"></i>
 								<p>Materials</p>
-								<span class="badge badge-count">6</span>
+								<!-- <span class="badge badge-count">6</span> -->
 							</a>
 						</li>
 					</ul>
@@ -200,92 +196,42 @@
 			<div class="main-panel">
 				<div class="content">
 					<div class="container-fluid">
-						<h4 class="page-title">Tables</h4>
+						<h4 class="page-title">Materials</h4>
 						<div class="row">
 							<div class="col-md-6">
 								<div class="card">
 									<div class="card-header">
-										<div class="card-title">View Youtube Links</div>
+									<div class="card-title">View Youtube Links</div>
 									</div>
 									<div class="card-body">
 										<form action="" method="get">
-											<tr>
-												<td>
-													Which Class
-												</td>
-												<input type="text" name="cls" id="class">
-												<br>
-											<td colspan="2">
-												<input type="submit" value="search" id="btn" name="search1">
-											</td>	
-											</tr>
-											<script>
-												<?php
-												if ($class == 8) {
-													if(isset($_GET['search1'])){
-            $classn
-			=$_GET['search1'];
-            $conn=mysqli_connect('localhost','root','','class8');
-            $s="select * from biology where biology='$biology'";
-            $result=mysqli_query($conn, $s);
-            if(mysqli_num_rows($result)>0){
-                while($row=mysqli_fetch_array($result)){
-                    ?>
-                <table border="1" >
-                <th>biology</th>
-                <th>chemistry</th>
-                <th>maths</th>
-                <th>physics</th> 
-            
-                
-                <th id="action">Action</th>
-            </tr>
-             <tr>
-                <td><?php echo $row['biology']; ?></td>
-                <td><?php echo $row['chemistry']; ?></td>
-                <td><?php echo $row['maths']; ?></td>
-                <td><?php echo $row['physics']; ?></td>
-                
-                
-                
-                <td id="action"><a href="student.php?edit=<?php echo $row['email'];  ?>"> <input style="margin-left: 30px;" type="button" value="Edit"></a>
-                  <a href="student.php?delete=<?php echo $row['email'];  ?>">  <input style="margin-left: 20px;" type="button" value="Delete"></a></td>
-            </tr>
-            </table>
-        <?php
-                }
-            }
-            else{
-                echo '<script>
-                    Swal.fire({
-                    title: "Error!",
-                    text: "Data not found",
-                    icon: "error",
-                    confirmButtonText: "OK"
-                    }).then(() => {
-                    window.location.href = "student.php";
-                    });
-                    </script>';
-
-            }
-        }
-												}
-												?>
-											</script>
+											<table border="0" align="left">
+                                            <tr>
+                                                <td>Which Class</td>
+                                                 	<td>
+                                                    	<label><input type="radio" name="cls" id="class8" value="8"> 8th</label>
+														<label><input type="radio" name="cls" id="class9" value="9"> 9th</label>
+														<label><input type="radio" name="cls" id="class10" value="10"> 10th</label>
+        										  	</td>
+    										</tr>
+    										<tr>
+        										<td colspan="9" align="" style="padding-top: 10px;">
+           											<input type="submit" value="Search" id="btn" name="search1">
+       	 										</td>
+    										</tr>
+											</table>
+											
 										</form>
-
-
-										
-
-
-
-
-								
 									</div>
 								</div>
-								
-								
 							</div>
+							
+
+
+
+
+
+
 							<div class="col-md-6">
 								<div class="card">
 									<div class="card-header">
@@ -331,7 +277,15 @@
 								
 								
 							</div>
-						
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+
 				
 			
 <!-- Modal -->
