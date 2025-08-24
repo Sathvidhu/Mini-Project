@@ -1,21 +1,139 @@
+<?php
+session_start();
+?>
+
 
 <!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>Forms - Ready Bootstrap Dashboard</title>
+	<title>Components - Ready Bootstrap Dashboard</title>
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
 	<link rel="stylesheet" href="assets/css/ready.css">
 	<link rel="stylesheet" href="assets/css/demo.css">
+	 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	 <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .search-container {
+            margin: 10px ;
+            width: 400px;
+            padding: 10px;
+            background-color: #fffefeff;
+            border-radius: 10px;
+           
+            text-align: center;
+        }
+
+        .search-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .search-container input[type="email"] {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .search-container input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .search-container input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+		.search-form {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+}
+
+
+    </style>
+	
+	<style>
+    /* Style only the table with class 'student-table' */
+    table.student-table {
+        width: 90%;
+        margin: 30px auto;
+        border-collapse: collapse;
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    table.student-table th {
+        background-color: #323b2eff;
+        color: #fff;
+        padding: 12px;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    table.student-table td {
+        padding: 10px 12px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+        font-size: 14px;
+    }
+
+    table.student-table tr:hover {
+        background-color: #f2f2f2;
+    }
+
+    table.student-table td input[type="button"] {
+        padding: 6px 14px;
+        margin: 4px;
+        border: none;
+        border-radius: 4px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    table.student-table td a:first-child input[type="button"] {
+        background-color: #28a745;
+        color: white;
+    }
+
+    table.student-table td a:first-child input[type="button"]:hover {
+        background-color: #218838;
+    }
+
+    table.student-table td a:last-child input[type="button"] {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    table.student-table td a:last-child input[type="button"]:hover {
+        background-color: #c82333;
+    }
+</style>
 </head>
 <body>
 	<div class="wrapper">
 		<div class="main-header">
 			<div class="logo-header">
 				<a href="index.php" class="logo">
-					Ready Dashboard
+					Admin Dashboard
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -26,14 +144,14 @@
 				<div class="container-fluid">
 					
 					<form class="navbar-left navbar-form nav-search mr-md-3" action="">
-						<div class="input-group">
+						<!--<div class="input-group">
 							<input type="text" placeholder="Search ..." class="form-control">
 							<div class="input-group-append">
 								<span class="input-group-text">
 									<i class="la la-search search-icon"></i>
 								</span>
 							</div>
-						</div>
+						</div>-->
 					</form>
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<li class="nav-item dropdown hidden-caret">
@@ -47,70 +165,15 @@
 								<a class="dropdown-item" href="#">Something else here</a>
 							</div>
 						</li>
-						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="la la-bell"></i>
-								<span class="notification">3</span>
-							</a>
-							<ul class="dropdown-menu notif-box" aria-labelledby="navbarDropdown">
-								<li>
-									<div class="dropdown-title">You have 4 new notification</div>
-								</li>
-								<li>
-									<div class="notif-center">
-										<a href="#">
-											<div class="notif-icon notif-primary"> <i class="la la-user-plus"></i> </div>
-											<div class="notif-content">
-												<span class="block">
-													New user registered
-												</span>
-												<span class="time">5 minutes ago</span> 
-											</div>
-										</a>
-										<a href="#">
-											<div class="notif-icon notif-success"> <i class="la la-comment"></i> </div>
-											<div class="notif-content">
-												<span class="block">
-													Rahmad commented on Admin
-												</span>
-												<span class="time">12 minutes ago</span> 
-											</div>
-										</a>
-										<a href="#">
-											<div class="notif-img"> 
-												<img src="assets/img/profile2.jpg" alt="Img Profile">
-											</div>
-											<div class="notif-content">
-												<span class="block">
-													Reza send messages to you
-												</span>
-												<span class="time">12 minutes ago</span> 
-											</div>
-										</a>
-										<a href="#">
-											<div class="notif-icon notif-danger"> <i class="la la-heart"></i> </div>
-											<div class="notif-content">
-												<span class="block">
-													Farrah liked Admin
-												</span>
-												<span class="time">17 minutes ago</span> 
-											</div>
-										</a>
-									</div>
-								</li>
-								<li>
-									<a class="see-all" href="javascript:void(0);"> <strong>See all notifications</strong> <i class="la la-angle-right"></i> </a>
-								</li>
-							</ul>
-						</li>
+						
 						<li class="nav-item dropdown">
-							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span >Hizrian</span></span> </a>
+							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span ><?php echo $_SESSION["uname"];?></span></span> </a>
 							<ul class="dropdown-menu dropdown-user">
 								<li>
 									<div class="user-box">
 										<div class="u-img"><img src="assets/img/profile.jpg" alt="user"></div>
 										<div class="u-text">
-											<h4>Hizrian</h4>
+											<h4><?php echo $_SESSION["uname"];?></h4>
 											<p class="text-muted">hello@themekita.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
 										</div>
 									</li>
@@ -138,7 +201,7 @@
 						<div class="info">
 							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									Hizrian
+									<?php echo $_SESSION["uname"];?>
 									<span class="user-level">Administrator</span>
 									<span class="caret"></span>
 								</span>
@@ -171,268 +234,293 @@
 							<a href="index.php">
 								<i class="la la-dashboard"></i>
 								<p>Dashboard</p>
-								<span class="badge badge-count">5</span>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href="student.php">
 								<i class="la la-table"></i>
 								<p>Student Details</p>
-								<span class="badge badge-count">14</span>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href="parent.php">
 								<i class="la la-keyboard-o"></i>
 								<p>Parent Details</p>
-								<span class="badge badge-count">50</span>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href="material.php">
 								<i class="la la-th"></i>
 								<p>Materials</p>
-								<span class="badge badge-count">6</span>
 							</a>
 						</li>
 					</ul>
 				</div>
 			</div>
+
+
+			
 			<div class="main-panel">
 				<div class="content">
 					<div class="container-fluid">
-						<h4 class="page-title">Forms</h4>
-						<div class="row">
-							<div class="col-md-6">
+						<h4 class="page-title">Parents's Information</h4>
+
+
+
+						
+
+
+						<!-- Student Details Section -->	
+						
+
+
+						<!-- Parent Details Section -->
+						 	<div class="col-md-12">
 								<div class="card">
 									<div class="card-header">
-										<div class="card-title">Base Form Control</div>
+										<h4 class="card-title">Parent's List</h4>
+										<p class="card-category">View Parent's Details</p>
 									</div>
 									<div class="card-body">
-										<div class="form-group">
-											<label for="email">Email Address</label>
-											<input type="email" class="form-control" id="email" placeholder="Enter Email">
-											<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-										</div>
-										<div class="form-group">
-											<label for="password">Password</label>
-											<input type="password" class="form-control" id="password" placeholder="Password">
-										</div>
-										<div class="form-group form-inline">
-											<label for="inlineinput" class="col-md-3 col-form-label">Inline Input</label>
-											<div class="col-md-9 p-0">
-												<input type="text" class="form-control input-full" id="inlineinput" placeholder="Enter Input">
-											</div>
-										</div>
-										<div class="form-group has-success">
-											<label for="successInput">Success Input</label>
-											<input type="text" id="successInput" value="Success" class="form-control">
-										</div>
-										<div class="form-group has-error has-feedback">
-											<label for="errorInput">Error Input</label>
-											<input type="text" id="errorInput" value="Error" class="form-control">
-											<small id="emailHelp" class="form-text text-muted">Please provide a valid informations.</small>
-										</div>
-										<div class="form-group">
-											<label for="disableinput">Disable Input</label>
-											<input type="text" class="form-control" id="disableinput" placeholder="Enter Input" disabled>
-										</div>
-										<div class="form-check">
-											<label>Gender</label><br/>
-											<label class="form-radio-label">
-												<input class="form-radio-input" type="radio" name="optionsRadios" value=""  checked="">
-												<span class="form-radio-sign">Male</span>
-											</label>
-											<label class="form-radio-label ml-3">
-												<input class="form-radio-input" type="radio" name="optionsRadios" value="">
-												<span class="form-radio-sign">Female</span>
-											</label>
-										</div>
-										<div class="form-group">
-											<label class="control-label">
-												Static
-											</label> <!----> <p class="form-control-static">hello@themekita.com</p> <!---->  <!----></div>
-											<div class="form-group">
-												<label for="exampleFormControlSelect1">Example select</label>
-												<select class="form-control" id="exampleFormControlSelect1">
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-												</select>
-											</div>
-											<div class="form-group">
-												<label for="exampleFormControlSelect2">Example multiple select</label>
-												<select multiple class="form-control" id="exampleFormControlSelect2">
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-												</select>
-											</div>
-											<div class="form-group">
-												<label for="exampleFormControlFile1">Example file input</label>
-												<input type="file" class="form-control-file" id="exampleFormControlFile1">
-											</div>
-											<div class="form-group">
-												<label for="comment">Comment</label>
-												<textarea class="form-control" id="comment" rows="5">
+										<?php
+    										// Connect to the database
+											$conn = mysqli_connect('localhost', 'root', '', 'smartstudy');
+											if (!$conn) {
+												die("Connection failed: " . mysqli_connect_error());
+											}
 
-												</textarea>
-											</div>
-											<div class="form-check">
-												<label class="form-check-label">
-													<input class="form-check-input" type="checkbox" value="">
-													<span class="form-check-sign">Agree with terms and conditions</span>
-												</label>
-											</div>
-										</div>
-										<div class="card-action">
-											<button class="btn btn-success">Submit</button>
-											<button class="btn btn-danger">Cancel</button>
-										</div>
+											// Use 'ppage' for parent pagination
+											$page = isset($_GET['ppage']) ? (int)$_GET['ppage'] : 1;
+											$parents_per_page = 5;
+											$offset = ($page - 1) * $parents_per_page;
+
+											$total_query = "SELECT COUNT(*) as total FROM registration";
+											$total_result = mysqli_query($conn, $total_query);
+											$total_row = mysqli_fetch_assoc($total_result);
+											$total_parents = $total_row['total'];
+
+											$query = "SELECT * FROM registration LIMIT $parents_per_page OFFSET $offset";
+											$result = mysqli_query($conn, $query);
+
+											echo '<div class="card-body">';
+											if (mysqli_num_rows($result) > 0) {
+												echo '<table border="1" class="student-table">';
+												echo '<tr><th>Student Name</th><th>Full Name</th><th>Email</th></tr>';
+
+												while ($row = mysqli_fetch_assoc($result)) {
+													echo '<tr>
+															<td>' . htmlspecialchars($row['fname']) . '</td>
+															<td>' . htmlspecialchars($row['pname']) . '</td>
+															<td>' . htmlspecialchars($row['pemail']) . '</td>
+														</tr>';
+												}
+
+												echo '</table>';
+
+												// Pagination Buttons
+												$next_page = $page + 1;
+												$prev_page = $page - 1;
+
+												if ($offset + $parents_per_page < $total_parents) {
+													echo '<br><a href="?ppage=' . $next_page . '" class="btn btn-primary">Next</a>';
+												}
+												if ($page > 1) {
+													echo '<a href="?ppage=' . $prev_page . '" class="btn btn-secondary" style="margin-left: 10px;">Previous</a>';
+												}
+											}
+											echo '</div>';
+											mysqli_close($conn);
+										?>
+
+
 									</div>
+
 								</div>
-								<div class="col-md-6">
+							</div>
+
+							<!-- Parent Editing Section -->
+
+							
+							<div class="row">
+								<div class="col-md-12">
 									<div class="card">
 										<div class="card-header">
-											<div class="card-title">Form Control Styles</div>
+											<h4 class="card-title">Parent's Details</h4>
+											<p class="card-category">Search By E-Mail</p>
 										</div>
-										<div class="card-body">
-											<div class="form-group">
-												<label for="squareInput">Square Input</label>
-												<input type="text" class="form-control input-square" id="squareInput" placeholder="Square Input">
-											</div>
-											<div class="form-group">
-												<label for="squareSelect">Square Select</label>
-												<select class="form-control input-square" id="squareSelect">
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-												</select>
-											</div>
-											<div class="form-group">
-												<label for="pillInput">Pill Input</label>
-												<input type="text" class="form-control input-pill" id="pillInput" placeholder="Pill Input">
-											</div>
-											<div class="form-group">
-												<label for="pillSelect">Pill Select</label>
-												<select class="form-control input-pill" id="pillSelect">
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-												</select>
-											</div>
-											<div class="form-group">
-												<label for="solidInput">Solid Input</label>
-												<input type="text" class="form-control input-solid" id="solidInput" placeholder="Solid Input">
-											</div>
-											<div class="form-group">
-												<label for="solidSelect">Solid Select</label>
-												<select class="form-control input-solid" id="solidSelect">
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-												</select>
-											</div>											
+
+										<div class="search-container">
+											<form method="get" action="" class="search-form">
+											<label for="email" class="fw-bold">Email:</label>
+											<input type="email" name="pemail" placeholder="Enter Email Address" required>
+											<input type="submit" name="search2" value="Search">
+											</form>
 										</div>
-										<div class="card-action">
-											<button class="btn btn-success">Submit</button>
-											<button class="btn btn-danger">Cancel</button>
-										</div>
-									</div>
-									<div class="card">
-										<div class="card-header">
-											<div class="card-title">Form Control Styles</div>
-										</div>
-										<div class="card-body">
-											<div class="form-group">
-												<label for="largeInput">Large Input</label>
-												<input type="text" class="form-control form-control-lg" id="largeInput" placeholder="Large Input">
-											</div>
-											<div class="form-group">
-												<label for="largeInput">Default Input</label>
-												<input type="text" class="form-control form-control" id="defaultInput" placeholder="Default Input">
-											</div>
-											<div class="form-group">
-												<label for="smallInput">Small Input</label>
-												<input type="text" class="form-control form-control-sm" id="smallInput" placeholder="Small Input">
-											</div>
-											<div class="form-group">
-												<label for="largeSelect">Large Select</label>
-												<select class="form-control form-control-lg" id="largeSelect">
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-												</select>
-											</div>
-											<div class="form-group">
-												<label for="defaultSelect">Default Select</label>
-												<select class="form-control form-control" id="defaultSelect">
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-												</select>
-											</div>
-											<div class="form-group">
-												<label for="smallSelect">Small Select</label>
-												<select class="form-control form-control-sm" id="smallSelect">
-													<option>1</option>
-													<option>2</option>
-													<option>3</option>
-													<option>4</option>
-													<option>5</option>
-												</select>
-											</div>
-										</div>
-										<div class="card-action">
-											<button class="btn btn-success">Submit</button>
-											<button class="btn btn-danger">Cancel</button>
-										</div>
+
+										<?php
+										$conn = mysqli_connect('localhost', 'root', '', 'smartstudy');
+										if (!$conn) {
+											die("Connection failed: " . mysqli_connect_error());
+										}
+
+										// 🔍 HANDLE SEARCH
+										if (isset($_GET['search2'])) {
+											$pemail = $_GET['pemail'];
+											$query = "SELECT * FROM registration WHERE pemail='$pemail'";
+											$result = mysqli_query($conn, $query);
+
+											if (mysqli_num_rows($result) > 0) {
+												echo '<table border="1" class="student-table">';
+												echo '<tr>
+														<th>Parent Name</th>
+														<th>Mobile Number</th>
+														<th>E-mail</th>
+														<th>Action</th>
+													</tr>';
+												while ($row = mysqli_fetch_assoc($result)) {
+													echo "<tr>
+															<td>{$row['pname']}</td>
+															<td>{$row['mobilenumber']}</td>
+															<td>{$row['pemail']}</td>
+															<td id='action'>
+																<a href='student.php?pedit={$row['pemail']}'><input type='button' value='Edit' style='margin-left: 30px;'></a>
+																<a href='student.php?pdelete={$row['pemail']}'><input type='button' value='Delete' style='margin-left: 20px;'></a>
+															</td>
+														</tr>";
+												}
+												echo "</table>";
+											} else {
+												echo "<script>
+													Swal.fire({
+														title: 'Error!',
+														text: 'No parent found with that email.',
+														icon: 'error',
+														confirmButtonText: 'OK'
+													}).then(() => {
+														window.location.href = 'student.php';
+													});
+												</script>";
+											}
+										}
+
+										// 🧹 HANDLE DELETE
+										if (isset($_GET['pdelete'])) {
+											$pemail = $_GET['pdelete'];
+											$delete_query = "DELETE FROM registration WHERE pemail='$pemail'";
+											mysqli_query($conn, $delete_query);
+
+											if (mysqli_affected_rows($conn) > 0) {
+												echo "<script>
+													Swal.fire({
+														title: 'Deleted!',
+														text: 'Parent details deleted successfully.',
+														icon: 'success',
+														confirmButtonText: 'OK'
+													}).then(() => {
+														window.location.href = 'student.php';
+													});
+												</script>";
+											} else {
+												echo "Failed to delete record.";
+											}
+										}
+
+										// ✏️ HANDLE EDIT VIEW
+										if (isset($_GET['pedit'])) {
+											$pemail = $_GET['pedit'];
+											$edit_query = "SELECT * FROM registration WHERE pemail='$pemail'";
+											$result = mysqli_query($conn, $edit_query);
+
+											while ($row = mysqli_fetch_assoc($result)) {
+												?>
+												<form action="" method="post">
+												<table class="student-table" align="center">
+													<tr>
+													<td>Parent Name:</td>
+													<td><input type="text" name="pname" value="<?php echo $row['pname']; ?>"></td>
+													</tr>
+													<tr>
+													<td>Mobile Number:</td>
+													<td><input type="text" name="mobilenumber" value="<?php echo $row['mobilenumber']; ?>"></td>
+													</tr>
+													<input type="hidden" name="pemail" value="<?php echo $row['pemail']; ?>">
+													<tr>
+													<td></td>
+													<td><input type="submit" name="psave" value="Save" style="background-color: #137c9cff; color: white; padding: 10px 20px; border: none; border-radius: 5px;"></td>
+													</tr>
+												</table>
+												</form>
+												<?php
+											}
+										}
+
+										// 💾 HANDLE SAVE
+										if (isset($_POST['psave'])) {
+											$pname = $_POST['pname'];
+											$mobilenumber = $_POST['mobilenumber'];
+											$pemail = $_POST['pemail'];
+
+											$update_query = "UPDATE registration SET pname='$pname', mobilenumber='$mobilenumber' WHERE pemail='$pemail'";
+
+											if (mysqli_query($conn, $update_query)) {
+												echo "<script>
+													Swal.fire({
+														title: 'Saved!',
+														text: 'Parent details updated successfully.',
+														icon: 'success',
+														confirmButtonText: 'OK'
+													}).then(() => {
+														window.location.href = 'student.php';
+													});
+												</script>";
+											} else {
+												echo "Failed to update record: " . mysqli_error($conn);
+											}
+										}
+
+										mysqli_close($conn);
+										?>
 									</div>
 								</div>
 							</div>
+
+
+
+
+
+
+							
+							
+							
 						</div>
 					</div>
-					<footer class="footer">
-						<div class="container-fluid">
-							<nav class="pull-left">
-								<ul class="nav">
-									<li class="nav-item">
-										<a class="nav-link" href="http://www.themekita.com">
-											ThemeKita
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" href="#">
-											Help
-										</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" href="#">
-											Licenses
-										</a>
-									</li>
-								</ul>
-							</nav>
-							<div class="copyright ml-auto">
-								2018, made with <i class="la la-heart heart text-danger"></i> by <a href="http://www.themekita.com">ThemeKita</a>
-							</div>				
-						</div>
-					</footer>
 				</div>
+				<footer class="footer">
+					<div class="container-fluid">
+						<nav class="pull-left">
+							<ul class="nav">
+								<li class="nav-item">
+									<a class="nav-link" href="#">
+										
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">
+										Help
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="https://themewagon.com/license/#free-item">
+										Licenses
+									</a>
+								</li>
+							</ul>
+						</nav>
+						<div class="copyright ml-auto">
+							2025, made </i> by <a href="#">AJ And Team</a>
+						</div>				
+					</div>
+				</footer>
 			</div>
 		</div>
 	</div>
@@ -471,4 +559,20 @@
 <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
 <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 <script src="assets/js/ready.min.js"></script>
+<script>
+	$( function() {
+		$( "#slider" ).slider({
+			range: "min",
+			max: 100,
+			value: 40,
+		});
+		$( "#slider-range" ).slider({
+			range: true,
+			min: 0,
+			max: 500,
+			values: [ 75, 300 ]
+		});
+	} );
+</script>
+
 </html>

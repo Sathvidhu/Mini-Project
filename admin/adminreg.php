@@ -95,14 +95,10 @@
                       Register
                  </h1>
                 
-               <tr>
-                <td>
-                    User Name
-                </td>
-                <td>
-                    <input type="text"  id = "uname" placeholder = "User Name" name = "uname" required>
-                </td>
-               </tr>
+                <tr><td>Full Name</td><td><input type="text" placeholder="Name" name="fullname" required></td></tr>
+                <tr><td>Email</td><td><input type="email" placeholder="Email" name="email" required></td></tr>
+                <tr><td>Phone</td><td><input type="tel" placeholder="Phone" name="phone" required></td></tr>
+                <tr><td>Username</td><td><input type="text" placeholder="Username" name="uname" required></td></tr>
                <tr>
                 <td> Password </td>
                 <td><input type="password" id = "pass1" name="password" placeholder = "Password" required></td>
@@ -123,10 +119,10 @@
 <?php
 if(isset($_POST["submit"] ))
 {
-    
- $con=mysqli_connect("localhost","root","","admin");
+
+ $con=mysqli_connect("localhost","root","","smartstudy");
  extract($_POST);
- $d ="insert into login(uname , password) values('$uname','$password')";
+ $d ="insert into admin_login(uname , password, email, phone, fullname) values('$uname','$password','$email','$phone','$fullname')";
  $a = mysqli_query($con,$d);
   if($a){
     ?>
@@ -140,7 +136,7 @@ if(isset($_POST["submit"] ))
         confirmButtonText: 'OK'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location = "login.php";
+            window.location = "index.php";
         }
     });
 </script>
@@ -157,6 +153,8 @@ if(isset($_POST["submit"] ))
   }
 }
 ?>
+
+
         </form>
     
 </body>

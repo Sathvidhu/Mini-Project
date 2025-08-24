@@ -1,3 +1,8 @@
+<?php
+session_start();
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +21,7 @@
 
         .search-container {
             margin: 10px ;
-            width: 350px;
+            width: 400px;
             padding: 10px;
             background-color: #fffefeff;
             border-radius: 10px;
@@ -52,7 +57,16 @@
         .search-container input[type="submit"]:hover {
             background-color: #0056b3;
         }
+		.search-form {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+}
+
+
     </style>
+	
 	<style>
     /* Style only the table with class 'student-table' */
     table.student-table {
@@ -119,7 +133,7 @@
 		<div class="main-header">
 			<div class="logo-header">
 				<a href="index.php" class="logo">
-					Ready Dashboard
+					Admin Dashboard
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
@@ -130,14 +144,14 @@
 				<div class="container-fluid">
 					
 					<form class="navbar-left navbar-form nav-search mr-md-3" action="">
-						<div class="input-group">
+						<!--<div class="input-group">
 							<input type="text" placeholder="Search ..." class="form-control">
 							<div class="input-group-append">
 								<span class="input-group-text">
 									<i class="la la-search search-icon"></i>
 								</span>
 							</div>
-						</div>
+						</div>-->
 					</form>
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<li class="nav-item dropdown hidden-caret">
@@ -151,70 +165,15 @@
 								<a class="dropdown-item" href="#">Something else here</a>
 							</div>
 						</li>
-						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="la la-bell"></i>
-								<span class="notification">3</span>
-							</a>
-							<ul class="dropdown-menu notif-box" aria-labelledby="navbarDropdown">
-								<li>
-									<div class="dropdown-title">You have 4 new notification</div>
-								</li>
-								<li>
-									<div class="notif-center">
-										<a href="#">
-											<div class="notif-icon notif-primary"> <i class="la la-user-plus"></i> </div>
-											<div class="notif-content">
-												<span class="block">
-													New user registered
-												</span>
-												<span class="time">5 minutes ago</span> 
-											</div>
-										</a>
-										<a href="#">
-											<div class="notif-icon notif-success"> <i class="la la-comment"></i> </div>
-											<div class="notif-content">
-												<span class="block">
-													Rahmad commented on Admin
-												</span>
-												<span class="time">12 minutes ago</span> 
-											</div>
-										</a>
-										<a href="#">
-											<div class="notif-img"> 
-												<img src="assets/img/profile2.jpg" alt="Img Profile">
-											</div>
-											<div class="notif-content">
-												<span class="block">
-													Reza send messages to you
-												</span>
-												<span class="time">12 minutes ago</span> 
-											</div>
-										</a>
-										<a href="#">
-											<div class="notif-icon notif-danger"> <i class="la la-heart"></i> </div>
-											<div class="notif-content">
-												<span class="block">
-													Farrah liked Admin
-												</span>
-												<span class="time">17 minutes ago</span> 
-											</div>
-										</a>
-									</div>
-								</li>
-								<li>
-									<a class="see-all" href="javascript:void(0);"> <strong>See all notifications</strong> <i class="la la-angle-right"></i> </a>
-								</li>
-							</ul>
-						</li>
+						
 						<li class="nav-item dropdown">
-							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span >Hizrian</span></span> </a>
+							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span ><?php echo $_SESSION["uname"];?></span></span> </a>
 							<ul class="dropdown-menu dropdown-user">
 								<li>
 									<div class="user-box">
 										<div class="u-img"><img src="assets/img/profile.jpg" alt="user"></div>
 										<div class="u-text">
-											<h4>Hizrian</h4>
+											<h4><?php echo $_SESSION["uname"];?></h4>
 											<p class="text-muted">hello@themekita.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
 										</div>
 									</li>
@@ -242,7 +201,7 @@
 						<div class="info">
 							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									Hizrian
+									<?php echo $_SESSION["uname"];?>
 									<span class="user-level">Administrator</span>
 									<span class="caret"></span>
 								</span>
@@ -298,10 +257,83 @@
 					</ul>
 				</div>
 			</div>
+
+
+			
 			<div class="main-panel">
 				<div class="content">
 					<div class="container-fluid">
 						<h4 class="page-title">Student's Information</h4>
+
+
+
+						<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Student's List</h4>
+										<p class="card-category">View Student Details</p>
+									</div>
+									<div class="card-body">
+										<?php
+											// Connect to the database
+											$conn = mysqli_connect('localhost', 'root', '', 'smartstudy');
+											// Check connection
+											if (!$conn) {
+												die("Connection failed: " . mysqli_connect_error());
+											}
+
+											// Determine current page
+											$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+											$students_per_page = 5;
+											$offset = ($page - 1) * $students_per_page;
+
+											// Count total students
+											$total_query = "SELECT COUNT(*) as total FROM registration";
+											$total_result = mysqli_query($conn, $total_query);
+											$total_row = mysqli_fetch_assoc($total_result);
+											$total_students = $total_row['total'];
+
+											// Fetch students for current page
+											$query = "SELECT * FROM registration LIMIT $students_per_page OFFSET $offset";
+											$result = mysqli_query($conn, $query);
+
+											// Display table
+											echo '<div class="card-body">';
+											if (mysqli_num_rows($result) > 0) {
+												echo '<table border="1" class="student-table">';
+												echo '<tr><th>Full Name</th><th>Email</th></tr>';
+
+												while ($row = mysqli_fetch_assoc($result)) {
+													echo '<tr>
+															<td>' . htmlspecialchars($row['fname']) . '</td>
+															<td>' . htmlspecialchars($row['email']) . '</td>
+														</tr>';
+												}
+
+												echo '</table>';
+												
+												// Show "Next" button if more students available
+												$next_page = $page + 1;
+												if ($offset + $students_per_page < $total_students) {
+													echo '<br><a href="?page=' . $next_page . '" class="btn btn-primary">Next</a>';
+												} 
+												if ($page > 1) {
+													$prev_page = $page - 1;
+													echo '<a href="?page=' . $prev_page . '" class="btn btn-secondary" style="margin-left: 10px;">Previous</a>';
+												}
+											}
+											echo '</div>';
+											mysqli_close($conn);
+										?>
+
+									</div>
+
+								</div>
+							</div>
+
+
+
+						<!-- Student Details Section -->	
 						<div class="row">
 							<div class="col-md-12">
 								<div class="card">
@@ -311,154 +343,517 @@
 									</div>
 									<div class="search-container">
         								
-        								<form method="get" action="">
-            								<input type="email" name="email" placeholder="Enter Email Address" required>
-            								<br>
-            								<input type="submit" name="search1" value="Search">
-        								</form>
+        								<form method="get" action="" class="search-form">
+											<label for="email" class="fw-bold">Email:</label>
+											<input type="email" name="email" placeholder="Enter Email Address" required>
+											<input type="submit" name="search1" value="Search">
+										</form>
+
     								</div>
 											<table>
 												<?php
-        if (isset($_GET['search1'])){
-            $email=$_GET['email'];
+        										if (isset($_GET['search1'])){
+            										$email=$_GET['email'];
+													$conn=mysqli_connect('localhost','root','','smartstudy');
+            										$s="select * from registration where email='$email'";
+            										$result=mysqli_query($conn, $s);
+            											if(mysqli_num_rows($result)>0){
+                											while($row=mysqli_fetch_array($result)){
+                    											?>
+                												<table border="1" class="student-table" >
+																<tr>
+                													<th>FullName</th>
+                													<th>Class</th>
+                													<th>Age</th>
+                													<th>Email</th> 
+                													<th>Gender</th>
+																	<th>School Name</th>
+																	<th>School Time1</th>
+																	<th>School Time2</th>
+																	<th>Action</th>
+            
+            													</tr>
+             													<tr>
+                													<td><?php echo $row['fname']; ?></td>
+                													<td><?php echo $row['class']; ?></td>
+                													<td><?php echo $row['age']; ?></td>
+                													<td><?php echo $row['email']; ?></td>
+                													<td><?php echo $row['gender']; ?></td>
+																	<td><?php echo $row['sname']; ?></td>
+																	<td><?php echo $row['time1']; ?></td>
+																	<td><?php echo $row['time2']; ?></td>
+                													<td id="action"><a href="student.php?edit=<?php echo $row['email'];  ?>"> <input style="margin-left: 30px;" type="button" value="Edit"></a>
+                  													<a href="student.php?delete=<?php echo $row['email'];  ?>">  <input style="margin-left: 20px;" type="button" value="Delete"></a></td>
+            													</tr>
+            													</table>
 			
-            $conn=mysqli_connect('localhost','root','','smartstudy');
-            $s="select * from registration where email='$email'";
-            $result=mysqli_query($conn, $s);
-            if(mysqli_num_rows($result)>0){
-                while($row=mysqli_fetch_array($result)){
-                    ?>
-                <table border="1" class="student-table" >
-                <th>fname</th>
-                <th>class</th>
-                <th>age</th>
-                <th>email</th> 
-                <th>gender</th>
-				<th>School Name</th>
-				
-                
-                <th id="action" style="text: center">Action</th>
-            </tr>
-             <tr>
-                <td><?php echo $row['fname']; ?></td>
-                <td><?php echo $row['class']; ?></td>
-                <td><?php echo $row['age']; ?></td>
-                <td><?php echo $row['email']; ?></td>
-                <td><?php echo $row['gender']; ?></td>
-				<td><?php echo $row['sname']; ?></td>
-                <td id="action"><a href="student.php?edit=<?php echo $row['email'];  ?>"> <input style="margin-left: 30px;" type="button" value="Edit"></a>
-                  <a href="student.php?delete=<?php echo $row['email'];  ?>">  <input style="margin-left: 20px;" type="button" value="Delete"></a></td>
-            </tr>
-            </table>
-        <?php
-                }
-            }
-            else{
-                echo '<script>
-                    Swal.fire({
-                    title: "Error!",
-                    text: "Data not found",
-                    icon: "error",
-                    confirmButtonText: "OK"
-                    }).then(() => {
-                    window.location.href = "student.php";
-                    });
-                    </script>';
+        														<?php
+                												}
+            											}
+            											else{
+																echo '<script>
+																	Swal.fire({
+																	title: "Error!",
+																	text: "Data not found",
+																	icon: "error",
+																	confirmButtonText: "OK"
+																	}).then(() => {
+																	window.location.href = "student.php";
+																	});
+																	</script>';
 
-            }
-        }
-           if(isset($_GET['delete'])){
-                $email=$_GET['delete'];
-                $conn=mysqli_connect('localhost','root','','smart');
-                $s="DELETE FROM registration WHERE email='$email'";
-                $result=mysqli_query($conn, $s);
-                if (mysqli_affected_rows($conn) > 0) {
-                    echo '<script>
-                    Swal.fire({
-                    title: "Success!",
-                    text: "Record data deleted successfully.",
-                    icon: "success",
-                    confirmButtonText: "OK"
-                    }).then(() => {
-                    window.location.href = "student.php";
-                    });
-                    </script>';    
-                } 
-                }
-            if(isset($_GET['edit'])){
-                $email=$_GET['edit'];
-                $conn=mysqli_connect('localhost','root','','smartstudy');
-                $s="SELECT * FROM registration WHERE email='$email'";
-                $result=mysqli_query($conn, $s);
-                while($row=mysqli_fetch_array($result)){
-                    ?>
-                    <form action="" method="post">
-                        <table align="center"class="student-table">
-                            <tr>
-                                <td>First Name:</td>
-                                <td><input type="text" name="fname" value="<?php echo $row['fname']; ?>"></td>
-                            </tr>
-                            <tr>
-                                <td>class:</td>
-                                <td><input type="text" name="class" value="<?php echo $row['class']; ?>"></td>
-                            </tr>
-                            <tr>
-                                <td>Address:</td>
-                                <td><input type="text" name="age" value="<?php echo $row['age']; ?>"></td>
-                            </tr>
-                            <tr>
-                                <td>Mobile:</td>
-                                <td><input type="text" name="email" value="<?php echo $row['email']; ?>"></td>
-                            </tr>
-							<tr>
-                                <td>Age:</td>
-                                <td><input type="text" name="age" value="<?php echo $row['age']; ?>"></td>
-                            </tr>
-                            <tr>
-                                <td>Gender:</td>
-                                <td><input type="text" name="gender" value="<?php echo $row['gender']; ?>"></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><input type="submit" name="save" value="Save" style="background-color: #137c9cff; color: white; padding: 10px 20px; border: none; border-radius: 5px;"></td>
-                            </tr>
-   
-                <?php
-                }
-            }
-                    if(isset($_POST['save'])){
-    $fname = $_POST['fname'];
-    $class = $_POST['class'];
-    $age = $_POST['age'];
-    $email = $_POST['email'];
-    $gender = $_POST['gender'];
+           			 										}
+       				 							}
+												if(isset($_GET['delete'])){
+														$email=$_GET['delete'];
+														$conn=mysqli_connect('localhost','root','','smart');
+														$s="DELETE FROM registration WHERE email='$email'";
+														$result=mysqli_query($conn, $s);
+														if (mysqli_affected_rows($conn) > 0) {
+															echo '<script>
+															Swal.fire({
+															title: "Success!",
+															text: "Record data deleted successfully.",
+															icon: "success",
+															confirmButtonText: "OK"
+															}).then(() => {
+															window.location.href = "student.php";
+															});
+															</script>';    
+														} 
+													}
+													if(isset($_GET['edit'])){
+														$email=$_GET['edit'];
+														$conn=mysqli_connect('localhost','root','','smartstudy');
+														$s="SELECT * FROM registration WHERE email='$email'";
+														$result=mysqli_query($conn, $s);
+														while($row=mysqli_fetch_array($result)){
+															?>
+															<form action="" method="post">
+																<table align="center"class="student-table">
+																	<tr>
+																		<td>First Name:</td>
+																		<td><input type="text" name="fname" value="<?php echo $row['fname']; ?>"></td>
+																	</tr>
+																	<tr>
+																		<td>class:</td>
+																		<td><input type="text" name="class" value="<?php echo $row['class']; ?>"></td>
+																	</tr>
+																	<tr>
+																		<td>Address:</td>
+																		<td><input type="text" name="age" value="<?php echo $row['age']; ?>"></td>
+																	</tr>
+																	<tr>
+																		<td>Mobile:</td>
+																		<td><input type="text" name="email" value="<?php echo $row['email']; ?>"></td>
+																	</tr>
+																	<tr>
+																		<td>Age:</td>
+																		<td><input type="text" name="age" value="<?php echo $row['age']; ?>"></td>
+																	</tr>
+																	<tr>
+																		<td>Gender:</td>
+																		<td><input type="text" name="gender" value="<?php echo $row['gender']; ?>"></td>
+																	</tr>
+																	<tr>
+																		<td></td>
+																		<td><input type="submit" name="save" value="Save" style="background-color: #137c9cff; color: white; padding: 10px 20px; border: none; border-radius: 5px;"></td>
+																	</tr>
+																	
+										
+														<?php
+														}
+													}
+                    								if(isset($_POST['save'])){
+														$fname = $_POST['fname'];
+														$class = $_POST['class'];
+														$age = $_POST['age'];
+														$email = $_POST['email'];
+														$gender = $_POST['gender'];
 
-    $conn = mysqli_connect("localhost", "root", "", "smartstudy");
-    $s = "UPDATE registration SET fname='$fname', class='$class', age='$age', gender='$gender' WHERE email='$email'";
+														$conn = mysqli_connect("localhost", "root", "", "smartstudy");
+														$s = "UPDATE registration SET fname='$fname', class='$class', age='$age', gender='$gender' WHERE email='$email'";
 
-    if (mysqli_query($conn, $s)) {
-        ?>
-        <script>
-        Swal.fire({
-            title: "Success!",
-            text: "Record saved (even if nothing changed).",
-            icon: "success",
-            confirmButtonText: "OK"
-        }).then(() => {
-            window.location.href = "student.php?email=<?php echo $email; ?>&search=search";
-        });
-        </script>
-        <?php
-    } else {
-        echo "Update failed: " . mysqli_error($conn);
-    }
-}
+														if (mysqli_query($conn, $s)) {
+															?>
+															<script>
+															Swal.fire({
+																title: "Success!",
+																text: "Record saved (even if nothing changed).",
+																icon: "success",
+																confirmButtonText: "OK"
+															}).then(() => {
+																window.location.href = "student.php?email=<?php echo $email; ?>&search=search";
+															});
+															</script>
+															<?php
+														} else {
+															echo "Update failed: " . mysqli_error($conn);
+														}
+													}
 
-        ?>
+        										?>
 											</table>
+
+											<!-- This is the end of the search results table -->
+											<table>
+											<?php
+												if (isset($_GET['search1'])){
+													$email=$_GET['email'];
+													
+													$conn=mysqli_connect('localhost','root','','smartstudy');
+													$s="select * from registration where email='$email'";
+													$result=mysqli_query($conn, $s);
+													if(mysqli_num_rows($result)>0){
+														while($row=mysqli_fetch_array($result)){
+															?>
+														<table border="1" class="student-table" >
+														<th>Mark List</th>
+														<th>Chemistry</th>
+														<th>Physics</th>
+														<th>Mathematics</th>
+														<th>Biology</th>
+														<th>Action</th>
+														
+													
+													</tr>
+													<tr>
+														<td>Marks</td>
+														<td><?php echo $row['chemistrymark']; ?></td>
+														<td><?php echo $row['physicsmark']; ?></td>
+														<td><?php echo $row['mathsmark']; ?></td>
+														<td><?php echo $row['biologymark']; ?></td>
+														<td id="action"><a href="student.php?edit=<?php echo $row['email'];  ?>"> <input style="margin-left: 30px;" type="button" value="Edit"></a>
+														<a href="student.php?delete=<?php echo $row['email'];  ?>">  <input style="margin-left: 20px;" type="button" value="Delete"></a></td>
+													</tr>
+													</table>
+													
+												<?php
+														}
+													}
+													else{
+														echo '<script>
+															Swal.fire({
+															title: "Error!",
+															text: "Data not found",
+															icon: "error",
+															confirmButtonText: "OK"
+															}).then(() => {
+															window.location.href = "student.php";
+															});
+															</script>';
+
+													}
+												}
+												if(isset($_GET['delete'])){
+														$email=$_GET['delete'];
+														$conn=mysqli_connect('localhost','root','','smart');
+														$s="DELETE FROM registration WHERE email='$email'";
+														$result=mysqli_query($conn, $s);
+														if (mysqli_affected_rows($conn) > 0) {
+															echo '<script>
+															Swal.fire({
+															title: "Success!",
+															text: "Record data deleted successfully.",
+															icon: "success",
+															confirmButtonText: "OK"
+															}).then(() => {
+															window.location.href = "student.php";
+															});
+															</script>';    
+														} 
+														}
+													if(isset($_GET['edit'])){
+														$email=$_GET['edit'];
+														$conn=mysqli_connect('localhost','root','','smartstudy');
+														$s="SELECT * FROM registration WHERE email='$email'";
+														$result=mysqli_query($conn, $s);
+														while($row=mysqli_fetch_array($result)){
+															?>
+															<form action="" method="post">
+																<table align="center"class="student-table">
+																	<tr>
+																		<td>First Name:</td>
+																		<td><input type="text" name="fname" value="<?php echo $row['fname']; ?>"></td>
+																	</tr>
+																	<tr>
+																		<td>class:</td>
+																		<td><input type="text" name="class" value="<?php echo $row['class']; ?>"></td>
+																	</tr>
+																	<tr>
+																		<td>Address:</td>
+																		<td><input type="text" name="age" value="<?php echo $row['age']; ?>"></td>
+																	</tr>
+																	<tr>
+																		<td>Mobile:</td>
+																		<td><input type="text" name="email" value="<?php echo $row['email']; ?>"></td>
+																	</tr>
+																	<tr>
+																		<td>Age:</td>
+																		<td><input type="text" name="age" value="<?php echo $row['age']; ?>"></td>
+																	</tr>
+																	<tr>
+																		<td>Gender:</td>
+																		<td><input type="text" name="gender" value="<?php echo $row['gender']; ?>"></td>
+																	</tr>
+																	<tr>
+																		<td></td>
+																		<td><input type="submit" name="save" value="Save" style="background-color: #137c9cff; color: white; padding: 10px 20px; border: none; border-radius: 5px;"></td>
+																	</tr>
+																	
+										
+														<?php
+														}
+													}
+                    							if(isset($_POST['save'])){
+													$fname = $_POST['fname'];
+													$class = $_POST['class'];
+													$age = $_POST['age'];
+													$email = $_POST['email'];
+													$gender = $_POST['gender'];
+
+													$conn = mysqli_connect("localhost", "root", "", "smartstudy");
+													$s = "UPDATE registration SET fname='$fname', class='$class', age='$age', gender='$gender' WHERE email='$email'";
+													if (mysqli_query($conn, $s)) {
+														?>
+														<script>
+														Swal.fire({
+														title: "Success!",
+														text: "Record saved (even if nothing changed).",
+														icon: "success",
+														confirmButtonText: "OK"
+														}).then(() => {
+															window.location.href = "student.php?email=<?php echo $email; ?>&search=search";
+															});
+														</script>
+														<?php
+														} else {
+															echo "Update failed: " . mysqli_error($conn);
+														}
+													}
+
+        									?>
+											</table>
+								</div>
+							</div>
+						</div>
+
+
+						<!-- Parent Details Section -->
+						 	<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Parent's List</h4>
+										<p class="card-category">View Parent's Details</p>
+									</div>
+									<div class="card-body">
+										<?php
+    										// Connect to the database
+											$conn = mysqli_connect('localhost', 'root', '', 'smartstudy');
+											if (!$conn) {
+												die("Connection failed: " . mysqli_connect_error());
+											}
+
+											// Use 'ppage' for parent pagination
+											$page = isset($_GET['ppage']) ? (int)$_GET['ppage'] : 1;
+											$parents_per_page = 5;
+											$offset = ($page - 1) * $parents_per_page;
+
+											$total_query = "SELECT COUNT(*) as total FROM registration";
+											$total_result = mysqli_query($conn, $total_query);
+											$total_row = mysqli_fetch_assoc($total_result);
+											$total_parents = $total_row['total'];
+
+											$query = "SELECT * FROM registration LIMIT $parents_per_page OFFSET $offset";
+											$result = mysqli_query($conn, $query);
+
+											echo '<div class="card-body">';
+											if (mysqli_num_rows($result) > 0) {
+												echo '<table border="1" class="student-table">';
+												echo '<tr><th>Student Name</th><th>Full Name</th><th>Email</th></tr>';
+
+												while ($row = mysqli_fetch_assoc($result)) {
+													echo '<tr>
+															<td>' . htmlspecialchars($row['fname']) . '</td>
+															<td>' . htmlspecialchars($row['pname']) . '</td>
+															<td>' . htmlspecialchars($row['pemail']) . '</td>
+														</tr>';
+												}
+
+												echo '</table>';
+
+												// Pagination Buttons
+												$next_page = $page + 1;
+												$prev_page = $page - 1;
+
+												if ($offset + $parents_per_page < $total_parents) {
+													echo '<br><a href="?ppage=' . $next_page . '" class="btn btn-primary">Next</a>';
+												}
+												if ($page > 1) {
+													echo '<a href="?ppage=' . $prev_page . '" class="btn btn-secondary" style="margin-left: 10px;">Previous</a>';
+												}
+											}
+											echo '</div>';
+											mysqli_close($conn);
+										?>
+
+
+									</div>
+
+								</div>
+							</div>
+
+							<!-- Parent Editing Section -->
+
+							
+							<div class="row">
+								<div class="col-md-12">
+									<div class="card">
+										<div class="card-header">
+											<h4 class="card-title">Parent's Details</h4>
+											<p class="card-category">Search By E-Mail</p>
+										</div>
+
+										<div class="search-container">
+											<form method="get" action="" class="search-form">
+											<label for="email" class="fw-bold">Email:</label>
+											<input type="email" name="pemail" placeholder="Enter Email Address" required>
+											<input type="submit" name="search2" value="Search">
+											</form>
+										</div>
+
+										<?php
+										$conn = mysqli_connect('localhost', 'root', '', 'smartstudy');
+										if (!$conn) {
+											die("Connection failed: " . mysqli_connect_error());
+										}
+
+										// 🔍 HANDLE SEARCH
+										if (isset($_GET['search2'])) {
+											$pemail = $_GET['pemail'];
+											$query = "SELECT * FROM registration WHERE pemail='$pemail'";
+											$result = mysqli_query($conn, $query);
+
+											if (mysqli_num_rows($result) > 0) {
+												echo '<table border="1" class="student-table">';
+												echo '<tr>
+														<th>Parent Name</th>
+														<th>Mobile Number</th>
+														<th>E-mail</th>
+														<th>Action</th>
+													</tr>';
+												while ($row = mysqli_fetch_assoc($result)) {
+													echo "<tr>
+															<td>{$row['pname']}</td>
+															<td>{$row['mobilenumber']}</td>
+															<td>{$row['pemail']}</td>
+															<td id='action'>
+																<a href='student.php?pedit={$row['pemail']}'><input type='button' value='Edit' style='margin-left: 30px;'></a>
+																<a href='student.php?pdelete={$row['pemail']}'><input type='button' value='Delete' style='margin-left: 20px;'></a>
+															</td>
+														</tr>";
+												}
+												echo "</table>";
+											} else {
+												echo "<script>
+													Swal.fire({
+														title: 'Error!',
+														text: 'No parent found with that email.',
+														icon: 'error',
+														confirmButtonText: 'OK'
+													}).then(() => {
+														window.location.href = 'student.php';
+													});
+												</script>";
+											}
+										}
+
+										// 🧹 HANDLE DELETE
+										if (isset($_GET['pdelete'])) {
+											$pemail = $_GET['pdelete'];
+											$delete_query = "DELETE FROM registration WHERE pemail='$pemail'";
+											mysqli_query($conn, $delete_query);
+
+											if (mysqli_affected_rows($conn) > 0) {
+												echo "<script>
+													Swal.fire({
+														title: 'Deleted!',
+														text: 'Parent details deleted successfully.',
+														icon: 'success',
+														confirmButtonText: 'OK'
+													}).then(() => {
+														window.location.href = 'student.php';
+													});
+												</script>";
+											} else {
+												echo "Failed to delete record.";
+											}
+										}
+
+										// ✏️ HANDLE EDIT VIEW
+										if (isset($_GET['pedit'])) {
+											$pemail = $_GET['pedit'];
+											$edit_query = "SELECT * FROM registration WHERE pemail='$pemail'";
+											$result = mysqli_query($conn, $edit_query);
+
+											while ($row = mysqli_fetch_assoc($result)) {
+												?>
+												<form action="" method="post">
+												<table class="student-table" align="center">
+													<tr>
+													<td>Parent Name:</td>
+													<td><input type="text" name="pname" value="<?php echo $row['pname']; ?>"></td>
+													</tr>
+													<tr>
+													<td>Mobile Number:</td>
+													<td><input type="text" name="mobilenumber" value="<?php echo $row['mobilenumber']; ?>"></td>
+													</tr>
+													<input type="hidden" name="pemail" value="<?php echo $row['pemail']; ?>">
+													<tr>
+													<td></td>
+													<td><input type="submit" name="psave" value="Save" style="background-color: #137c9cff; color: white; padding: 10px 20px; border: none; border-radius: 5px;"></td>
+													</tr>
+												</table>
+												</form>
+												<?php
+											}
+										}
+
+										// 💾 HANDLE SAVE
+										if (isset($_POST['psave'])) {
+											$pname = $_POST['pname'];
+											$mobilenumber = $_POST['mobilenumber'];
+											$pemail = $_POST['pemail'];
+
+											$update_query = "UPDATE registration SET pname='$pname', mobilenumber='$mobilenumber' WHERE pemail='$pemail'";
+
+											if (mysqli_query($conn, $update_query)) {
+												echo "<script>
+													Swal.fire({
+														title: 'Saved!',
+														text: 'Parent details updated successfully.',
+														icon: 'success',
+														confirmButtonText: 'OK'
+													}).then(() => {
+														window.location.href = 'student.php';
+													});
+												</script>";
+											} else {
+												echo "Failed to update record: " . mysqli_error($conn);
+											}
+										}
+
+										mysqli_close($conn);
+										?>
 									</div>
 								</div>
 							</div>
+
+
+
+
+
+
 							<div class="col-md-12">
 								<div class="card">
 									<div class="card-header">
@@ -484,7 +879,35 @@
 									</div>
 								</div>
 							</div>
-							
+
+
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header">
+										<h4 class="card-title">Attendance</h4>
+										<p class="card-category">Here is a subtitle for this table</p>
+									</div>
+									<div class="card-body">
+										<p class="demo">
+											<button class="btn btn-default" disabled="disabled">Default</button>
+
+											<button class="btn btn-primary" disabled="disabled">Primary</button>
+
+											<button class="btn btn-info" disabled="disabled">Info</button>
+
+											<button class="btn btn-success" disabled="disabled">Success</button>
+
+											<button class="btn btn-warning" disabled="disabled">Warning</button>
+
+											<button class="btn btn-danger" disabled="disabled">Danger</button>
+
+											<button class="btn btn-link" disabled>Link</button>
+										</p>
+									</div>
+								</div>
+							</div>
+							</div>
+							</div>
 							
 							
 							
@@ -564,8 +987,8 @@
 						<nav class="pull-left">
 							<ul class="nav">
 								<li class="nav-item">
-									<a class="nav-link" href="http://www.themekita.com">
-										ThemeKita
+									<a class="nav-link" href="#">
+										
 									</a>
 								</li>
 								<li class="nav-item">
@@ -581,7 +1004,7 @@
 							</ul>
 						</nav>
 						<div class="copyright ml-auto">
-							2018, made with <i class="la la-heart heart text-danger"></i> by <a href="http://www.themekita.com">ThemeKita</a>
+							2025, made </i> by <a href="#">AJ And Team</a>
 						</div>				
 					</div>
 				</footer>

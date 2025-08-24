@@ -93,7 +93,7 @@
             </table>
 <?php
 if (isset($_POST["submit"])) {
-    $con = mysqli_connect("localhost", "root", "", "admin");
+    $con = mysqli_connect("localhost", "root", "", "smartstudy");
     if (!$con) {
         die("Connection failed: ");
     }
@@ -113,7 +113,7 @@ if (isset($_POST["submit"])) {
             confirmButtonText: 'OK'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location = "admindash.php";
+                window.location = "adminreg.php";
             }
         });
         </script>

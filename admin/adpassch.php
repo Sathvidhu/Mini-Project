@@ -96,13 +96,11 @@
 if(isset($_POST["submit"] ))
 {
     
- $con=mysqli_connect("localhost","root","","admin");
+ $con=mysqli_connect("localhost","root","","smartstudy");
  extract($_POST);
  $d ="insert into adminpass(adpass) values('$adpass')";
  $a = mysqli_query($con,$d);
   if($a){
-        
-
     ?>
     <script>
     Swal.fire({

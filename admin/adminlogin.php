@@ -110,9 +110,9 @@ session_start();
 if(isset($_POST["submit"] ))
 {
     
- $con=mysqli_connect("localhost","root","","admin");
+ $con=mysqli_connect("localhost","root","","smartstudy");
  extract($_POST);
- $s="select * from login where uname='$uname' and password='$password'";
+ $s="select * from admin_login where uname='$uname' and password='$password'";
  $a=mysqli_query($con,$s);
  echo mysqli_affected_rows($con);
  if(mysqli_affected_rows($con)>0)

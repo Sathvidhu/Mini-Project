@@ -3,7 +3,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 session_start();
 
-$con = mysqli_connect("localhost", "root", "", "admin");
+$con = mysqli_connect("localhost", "root", "", "smartstudy");
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         });
         </script>";
     } else {
-        $update = "UPDATE login SET fullname='$fullname', email='$email', phone='$phone', password='$password' WHERE uname='$uname'";
+        $update = "UPDATE admin_login SET fullname='$fullname', email='$email', phone='$phone', password='$password' WHERE uname='$uname'";
 
         if (mysqli_query($con, $update)) {
             $updated = true; // set flag for SweetAlert
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 // Fetch current user details
 $uname = $_SESSION["uname"];
-$query = "SELECT * FROM login WHERE uname = '$uname'";
+$query = "SELECT * FROM admin_login WHERE uname = '$uname'";
 $result = mysqli_query($con, $query);
 
 if (mysqli_num_rows($result) > 0) {

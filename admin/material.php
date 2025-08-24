@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,16 +28,7 @@
 			<nav class="navbar navbar-header navbar-expand-lg">
 				<div class="container-fluid">
 					
-					<form class="navbar-left navbar-form nav-search mr-md-3" action="">
-						<div class="input-group">
-							<input type="text" placeholder="Search ..." class="form-control">
-							<div class="input-group-append">
-								<span class="input-group-text">
-									<i class="la la-search search-icon"></i>
-								</span>
-							</div>
-						</div>
-					</form>
+					
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						<li class="nav-item dropdown hidden-caret">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -103,13 +98,13 @@
 							</ul>
 						</li>
 						<li class="nav-item dropdown">
-							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span >Hizrian</span></span> </a>
+							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span ><?php echo $_SESSION["uname"];?></span></span> </a>
 							<ul class="dropdown-menu dropdown-user">
 								<li>
 									<div class="user-box">
 										<div class="u-img"><img src="assets/img/profile.jpg" alt="user"></div>
 										<div class="u-text">
-											<h4>Hizrian</h4>
+											<h4><?php echo $_SESSION["uname"];?></h4>
 											<p class="text-muted">hello@themekita.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
 										</div>
 									</li>
@@ -126,7 +121,7 @@
 						</ul>
 					</div>
 				</nav>
-			</div>
+		</div>
 			<div class="sidebar">
 				<div class="scrollbar-inner sidebar-wrapper">
 					<div class="user">
@@ -136,7 +131,7 @@
 						<div class="info">
 							<a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
 								<span>
-									Hizrian
+									<?php echo $_SESSION["uname"];?>
 									<span class="user-level">Administrator</span>
 									<span class="caret"></span>
 								</span>
@@ -201,40 +196,6 @@
 							<div class="col-md-6">
 								<div class="card">
 									<div class="card-header">
-									<div class="card-title">View Youtube Links</div>
-									</div>
-									<div class="card-body">
-										<form action="" method="get">
-											<table border="0" align="left">
-                                            <tr>
-                                                <td>Which Class</td>
-                                                 	<td>
-                                                    	<label><input type="radio" name="cls" id="class8" value="8"> 8th</label>
-														<label><input type="radio" name="cls" id="class9" value="9"> 9th</label>
-														<label><input type="radio" name="cls" id="class10" value="10"> 10th</label>
-        										  	</td>
-    										</tr>
-    										<tr>
-        										<td colspan="9" align="" style="padding-top: 10px;">
-           											<input type="submit" value="Search" id="btn" name="search1">
-       	 										</td>
-    										</tr>
-											</table>
-											
-										</form>
-									</div>
-								</div>
-							</div>
-							
-
-
-
-
-
-
-							<div class="col-md-6">
-								<div class="card">
-									<div class="card-header">
 										<div class="card-title">Upload / Update Youtube Links</div>
 									</div>
 									<div class="card-body">
@@ -251,29 +212,162 @@
 											<tbody>
 												<tr>
 													<td>8th</td>
-													<td><a href="bio8.php">click here</a></td>
-													<td><a href="chem8.php">click here</a></td>
-													<td><a href="phy8.php">click here</a></td>
-													<td><a href="math8.php">click here</a></td>
+													<td><a href="add_ytvideo.php?class=8&subject=Biology">click here</a></td>
+													<td><a href="add_ytvideo.php?class=8&subject=Chemistry">click here</a></td>
+													<td><a href="add_ytvideo.php?class=8&subject=Physics">click here</a></td>
+													<td><a href="add_ytvideo.php?class=8&subject=Maths">click here</a></td>
 												</tr>
 												<tr>
 													<td>9th</td>
-													<td><a href="bio9.php">click here</a></td>
-													<td><a href="chem9.php">click here</a></td>
-													<td><a href="phy9.php">click here</a></td>
-													<td><a href="math9.php">click here</a></td>
+													<td><a href="add_ytvideo.php?class=9&subject=Biology">click here</a></td>
+													<td><a href="add_ytvideo.php?class=9&subject=Chemistry">click here</a></td>
+													<td><a href="add_ytvideo.php?class=9&subject=Physics">click here</a></td>
+													<td><a href="add_ytvideo.php?class=9&subject=Maths">click here</a></td>
 												</tr>
 												<tr>
 													<td>10th</td>
-													<td><a href="bio10.php">click here</a></td>
-													<td><a href="chem10.php">click here</a></td>
-													<td><a href="phy10.php">click here</a></td>
-													<td><a href="math10.php">click here</a></td>
+													<td><a href="add_ytvideo.php?class=10&subject=Biology">click here</a></td>
+													<td><a href="add_ytvideo.php?class=10&subject=Chemistry">click here</a></td>
+													<td><a href="add_ytvideo.php?class=10&subject=Physics">click here</a></td>
+													<td><a href="add_ytvideo.php?class=10&subject=Maths">click here</a></td>
 												</tr>
 											</tbody>
 										</table>
 									</div>
 								</div>
+								
+								
+							</div>
+							<div class="col-md-6">
+								<div class="card">
+									<div class="card-header">
+										<div class="card-title">Upload / Update Pdfs</div>
+									</div>
+									<div class="card-body">
+										<table class="table table-hover">
+											<thead>
+												<tr>
+													<th scope="col">Class</th>
+													<th scope="col">Biology</th>
+													<th scope="col">Chemistry</th>
+													<th scope="col">Physics</th>
+													<th scope="col">Maths</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>8th</td>
+													<td><a href="upload_pdf.php?class=8&subject=Biology">click here</a></td>
+													<td><a href="upload_pdf.php?class=8&subject=Chemistry">click here</a></td>
+													<td><a href="upload_pdf.php?class=8&subject=Physics">click here</a></td>
+													<td><a href="upload_pdf.php?class=8&subject=Maths">click here</a></td>
+												</tr>
+												<tr>
+													<td>9th</td>
+													<td><a href="upload_pdf.php?class=9&subject=Biology">click here</a></td>
+													<td><a href="upload_pdf.php?class=9&subject=Chemistry">click here</a></td>
+													<td><a href="upload_pdf.php?class=9&subject=Physics">click here</a></td>
+													<td><a href="upload_pdf.php?class=9&subject=Maths">click here</a></td>
+												</tr>
+												<tr>
+													<td>10th</td>
+													<td><a href="upload_pdf.php?class=10&subject=Biology">click here</a></td>
+													<td><a href="upload_pdf.php?class=10&subject=Chemistry">click here</a></td>
+													<td><a href="upload_pdf.php?class=10&subject=Physics">click here</a></td>
+													<td><a href="upload_pdf.php?class=10&subject=Maths">click here</a></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="card">
+									<div class="card-header">
+										<div class="card-title">Upload / Update Mock Test Questions</div>
+									</div>
+									<div class="card-body">
+										<table class="table table-hover">
+												<thead>
+													<tr>
+														<th scope="col">Class</th>
+														<th scope="col">Biology</th>
+														<th scope="col">Chemistry</th>
+														<th scope="col">Physics</th>
+														<th scope="col">Maths</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr>
+														<td>8th</td>
+														<td><a href="upload_question.php?class=8&subject=Biology">click here</a></td>
+														<td><a href="upload_question.php?class=8&subject=Chemistry">click here</a></td>
+														<td><a href="upload_question.php?class=8&subject=Physics">click here</a></td>
+														<td><a href="upload_question.php?class=8&subject=Maths">click here</a></td>
+													</tr>
+													<tr>
+														<td>9th</td>
+														<td><a href="upload_question.php?class=9&subject=Biology">click here</a></td>
+														<td><a href="upload_question.php?class=9&subject=Chemistry">click here</a></td>
+														<td><a href="upload_question.php?class=9&subject=Physics">click here</a></td>
+														<td><a href="upload_question.php?class=9&subject=Maths">click here</a></td>
+													</tr>
+													<tr>
+														<td>10th</td>
+														<td><a href="upload_question.php?class=10&subject=Biology">click here</a></td>
+														<td><a href="upload_question.php?class=10&subject=Chemistry">click here</a></td>
+														<td><a href="upload_question.php?class=10&subject=Physics">click here</a></td>
+														<td><a href="upload_question.php?class=10&subject=Maths">click here</a></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="card">
+									<div class="card-header">
+										<div class="card-title">Upload / Update Questions</div>
+									</div>
+									<div class="card-body">
+										<table class="table table-hover">
+											<thead>
+												<tr>
+													<th scope="col">Class</th>
+													<th scope="col">Biology</th>
+													<th scope="col">Chemistry</th>
+													<th scope="col">Physics</th>
+													<th scope="col">Maths</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>8th</td>
+													<td><a href="upload_questionpaper.php?class=8&subject=Biology">click here</a></td>
+													<td><a href="upload_questionpaper.php?class=8&subject=Chemistry">click here</a></td>
+													<td><a href="upload_questionpaper.php?class=8&subject=Physics">click here</a></td>
+													<td><a href="upload_questionpaper.php?class=8&subject=Maths">click here</a></td>
+												</tr>
+												<tr>
+													<td>9th</td>
+													<td><a href="upload_questionpaper.php?class=9&subject=Biology">click here</a></td>
+													<td><a href="upload_questionpaper.php?class=9&subject=Chemistry">click here</a></td>
+													<td><a href="upload_questionpaper.php?class=9&subject=Physics">click here</a></td>
+													<td><a href="upload_questionpaper.php?class=9&subject=Maths">click here</a></td>
+												</tr>
+												<tr>
+													<td>10th</td>
+													<td><a href="upload_questionpaper.php?class=10&subject=Biology">click here</a></td>
+													<td><a href="upload_questionpaper.php?class=10&subject=Chemistry">click here</a></td>
+													<td><a href="upload_questionpaper.php?class=10&subject=Physics">click here</a></td>
+													<td><a href="upload_questionpaper.php?class=10&subject=Maths">click here</a></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+								
 								
 								
 							</div>

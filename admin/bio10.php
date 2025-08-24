@@ -109,6 +109,28 @@
                     <input type="text" placeholder="Link Here" id = "nmm" name = "chapter4" required>
                 </td>
                </tr>
+               <tr>
+                <td>
+                        chapter5
+                </td>
+                <td>
+                    <input type="text" placeholder="Link Here" id = "nmm" name = "chapter5" required>
+                </td>
+               </tr><tr>
+                <td>
+                        chapter6
+                </td>
+                <td>
+                    <input type="text" placeholder="Link Here" id = "nmm" name = "chapter6" required>
+                </td>
+               </tr><tr>
+                <td>
+                        chapter7
+                </td>
+                <td>
+                    <input type="text" placeholder="Link Here" id = "nmm" name = "chapter7" required>
+                </td>
+               </tr>
                 <tr>
                  <td colspan="2" align="center">
                         <input type="submit" name="submit" value="Upload">
@@ -120,10 +142,9 @@
  if(isset($_POST["submit"] ))
                 {
  $corn = mysqli_connect("localhost","root","","class10");
- echo "hi";
  extract ($_POST);
-$d = "INSERT INTO biology (chapter1, chapter2, chapter3, chapter4) 
-      VALUES ('$chapter1', '$chapter2', '$chapter3', '$chapter4')";
+$d = "INSERT INTO biology (chapter1, chapter2, chapter3, chapter4, chapter5, chapter6, chapter7) 
+      VALUES ('$chapter1', '$chapter2', '$chapter3', '$chapter4', '$chapter5', '$chapter6', '$chapter7')";
   if(!$corn){
     die("Connection Failed: " . mysqli_connect_error());
   }
@@ -140,7 +161,7 @@ $d = "INSERT INTO biology (chapter1, chapter2, chapter3, chapter4)
         confirmButtonText: 'OK'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location = "bio10.php";
+            window.location = "material.php";
         }
     });
 </script>

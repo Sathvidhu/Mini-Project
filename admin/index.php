@@ -1,5 +1,16 @@
 <?php
 session_start();
+$uname = $_SESSION["uname"];
+?>
+<?php
+
+$conn = mysqli_connect("localhost", "root", "", "smartstudy");
+$query = "SELECT COUNT(email) AS email_count FROM registration";
+$result = mysqli_query($conn, $query);
+$row = mysqli_fetch_assoc($result);
+$email_count = $row['email_count'];
+
+
 ?>
 
 
@@ -7,12 +18,22 @@ session_start();
 <html>
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-	<title>Dashboard</title>
+	<title>Admin Dashboard</title>
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
 	<link rel="stylesheet" href="assets/css/ready.css">
 	<link rel="stylesheet" href="assets/css/demo.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+	
+
+    <style>
+		ul.list-group {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+	</style>
 </head>
 <body>
 	<div class="wrapper">
@@ -32,7 +53,47 @@ session_start();
 					
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
 						
+
+								<!-- SweetAlert2 -->
+								<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+								<script>
+								function handleRequest(student_id, request_id, student_name) {
+									Swal.fire({
+										title: 'Ranking Reset Request',
+										text: student_name + ' requested to reset ranking.',
+										icon: 'info',
+										showCancelButton: true,
+										confirmButtonText: 'Accept',
+										cancelButtonText: 'Deny'
+									}).then((result) => {
+										if (result.isConfirmed) {
+											// Accept request
+											fetch('do_reset.php', {
+												method: 'POST',
+												headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+												body: 'student_id=' + student_id + '&request_id=' + request_id
+											})
+											.then(response => response.text())
+											.then(data => {
+												Swal.fire('Done!', 'Ranking has been reset.', 'success').then(()=> location.reload());
+											});
+										} else if (result.dismiss === Swal.DismissReason.cancel) {
+											// Deny request
+											fetch('deny_reset.php', {
+												method: 'POST',
+												headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+												body: 'request_id=' + request_id
+											})
+											.then(response => response.text())
+											.then(data => {
+												Swal.fire('Denied', 'Request has been denied.', 'error').then(()=> location.reload());
+											});
+										}
+									});
+								}
+								</script>
 						
+
 						<li class="nav-item dropdown">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="profile.php" aria-expanded="false"> <img src="assets/img/profile.jpg" alt="user-img" width="36" class="img-circle"><span ><?php echo $_SESSION["uname"];?></span></span> </a>
 							<ul class="dropdown-menu dropdown-user">
@@ -41,7 +102,7 @@ session_start();
 										<div class="u-img"><img src="assets/img/profile.jpg" alt="user"></div>
 										<div class="u-text">
 											<h4><?php echo $_SESSION["uname"];?></h4>
-											<p class="text-muted">hello@themekita.com</p>
+											
 											<a href="profile.php" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
 										</div>
 									</li>
@@ -51,14 +112,14 @@ session_start();
 									<div class="dropdown-divider"></div>
 									<a class="dropdown-item" href="adminsettings.php"><i class="ti-settings"></i> Account Setting</a>
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="adminlogin.php"><i class="fa fa-power-off"></i> Logout</a>
+									<a class="dropdown-item" name="logout" href="adminlogin.php"><i class="fa fa-power-off"></i> Logout</a>
 								</ul>
 								<!-- /.dropdown-user -->
 							</li>
 						</ul>
 					</div>
 				</nav>
-			</div>
+		</div>
 			<div class="sidebar">
 				<div class="scrollbar-inner sidebar-wrapper">
 					<div class="user">
@@ -88,8 +149,8 @@ session_start();
 										</a>
 									</li>
 									<li>
-										<a href="adminsettings.php">
-											<span class="link-collapse">Settings</span>
+										<a href="#">
+											<span class="link-collapse">Inbox</span>
 										</a>
 									</li>
 								</ul>
@@ -143,7 +204,7 @@ session_start();
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
 													<p class="card-category">Students</p>
-													<h4 class="card-title">1,294</h4>
+													<h4 class="card-title"><?php echo $email_count; ?></h4>
 												</div>
 											</div>
 										</div>
@@ -152,62 +213,47 @@ session_start();
 							</div>
 							<div class="col-md-3">
 								<div class="card card-stats card-success">
-									<div class="card-body ">
-										<div class="row">
-											<div class="col-5">
-												<div class="icon-big text-center">
-													<i class="la la-bar-chart"></i>
-												</div>
-											</div>
-											<div class="col-7 d-flex align-items-center">
-												<div class="numbers">
-													<p class="card-category">Sales</p>
-													<h4 class="card-title">$ 1,345</h4>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-3">
-								<div class="card card-stats card-danger">
 									<div class="card-body">
 										<div class="row">
 											<div class="col-5">
-												<div class="icon-big text-center">
-													<i class="la la-newspaper-o"></i>
+												<div class="icon-big text-center text-primary">
+													<i class="fa fa-book"></i>
 												</div>
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Subscribers</p>
-													<h4 class="card-title">1303</h4>
+													<p class="card-category">Top Subject</p>
+													<h4 class="card-title">Mathematics</h4>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+
 							<div class="col-md-3">
-								<div class="card card-stats card-primary">
-									<div class="card-body ">
+								<div class="card card-stats card-warning">
+									<div class="card-body">
 										<div class="row">
 											<div class="col-5">
-												<div class="icon-big text-center">
-													<i class="la la-check-circle"></i>
+												<div class="icon-big text-center text-warning">
+													<i class="fas fa-folder-open"></i>
 												</div>
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Order</p>
-													<h4 class="card-title">576</h4>
+													<p class="card-category">Materials Uploaded</p>
+													<h4 class="card-title">240</h4> <!-- Replace with dynamic number if needed -->
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-<!-- 							<div class="col-md-3">
+						</div>
+
+							
+						<!--<div class="col-md-3">
 								<div class="card card-stats">
 									<div class="card-body ">
 										<div class="row">
@@ -283,9 +329,9 @@ session_start();
 									</div>
 								</div>
 							</div> -->
-						</div>
+					</div>
 						<div class="row">
-							<div class="col-md-3">
+							<!-- <div class="col-md-3">
 								<div class="card">
 									<div class="card-header">
 										<h4 class="card-title">Task</h4>
@@ -298,307 +344,175 @@ session_start();
 										<div class="legend"><i class="la la-circle text-primary"></i> Completed</div>
 									</div>
 								</div>
-							</div>
-							<div class="col-md-9">
+							</div> -->
+							<div class="col-md-12">
 								<div class="card">
 									<div class="card-header">
-										<h4 class="card-title">World Map</h4>
-										<p class="card-category">
-										Map of the distribution of users around the world</p>
+										<h4 class="card-title">Recent Activity</h4>
 									</div>
 									<div class="card-body">
-										<div class="mapcontainer">
-											<div class="map">
-												<span>Alternative content for the map</span>
-											</div>
+										<ul class="list-group list-group-flush">
+											<?php
+											$conn = new mysqli("localhost", "root", "", "smartstudy");
+
+											if ($conn->connect_error) {
+												die("Connection failed: " . $conn->connect_error);
+											}
+
+											// --- Pagination setup ---
+											$limit = 5; // show 5 per page
+											$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+											if ($page < 1) $page = 1;
+											$offset = ($page - 1) * $limit;
+
+											// --- Get total records for pagination ---
+											$total_sql = "SELECT COUNT(*) as total FROM student_activity";
+											$total_result = $conn->query($total_sql);
+											$total_row = $total_result->fetch_assoc();
+											$total_records = $total_row['total'];
+											$total_pages = ceil($total_records / $limit);
+
+											// --- Fetch activities for current page ---
+											$sql = "SELECT student_email, activity, activity_time 
+													FROM student_activity 
+													ORDER BY activity_time DESC 
+													LIMIT $limit OFFSET $offset";
+											$result = $conn->query($sql);
+
+											if ($result->num_rows > 0) {
+												while ($row = $result->fetch_assoc()) {
+													echo "<li class='list-group-item'>
+															<i class='fas fa-user text-primary'></i> 
+															<strong>{$row['student_email']}</strong> → {$row['activity']}
+															<span class='text-muted float-end'>" . date("M d, g:i a", strtotime($row['activity_time'])) . "</span>
+														</li>";
+												}
+											} else {
+												echo "<li class='list-group-item text-muted'>No recent activity</li>";
+											}
+											?>
+										</ul>
+
+										<!-- Pagination buttons -->
+										<div class="mt-3 d-flex justify-content-between">
+											<?php if ($page > 1): ?>
+												<a class="btn btn-sm btn-primary" href="?page=<?php echo $page-1; ?>">← Previous</a>
+											<?php else: ?>
+												<span></span>
+											<?php endif; ?>
+
+											<?php if ($page < $total_pages): ?>
+												<a class="btn btn-sm btn-primary" href="?page=<?php echo $page+1; ?>">Next →</a>
+											<?php endif; ?>
 										</div>
 									</div>
 								</div>
 							</div>
+
+
 						</div>
 						<div class="row row-card-no-pd">
 							<div class="col-md-4">
 								<div class="card">
 									<div class="card-body">
-										<p class="fw-bold mt-1">My Balance</p>
-										<h4><b>$ 3,018</b></h4>
-										<a href="#" class="btn btn-primary btn-full text-left mt-3 mb-3"><i class="la la-plus"></i> Add Balance</a>
-									</div>
-									<div class="card-footer">
-										<ul class="nav">
-											<li class="nav-item"><a class="btn btn-default btn-link" href="#"><i class="la la-history"></i> History</a></li>
-											<li class="nav-item ml-auto"><a class="btn btn-default btn-link" href="#"><i class="la la-refresh"></i> Refresh</a></li>
+										<p class="fw-bold mt-1">Notifications</p>
+										<ul class="list-group list-group-flush">
+											<li class="list-group-item">
+												<i class="fas fa-bell text-warning"></i> Assignment due in <strong>Physics</strong>.
+												<span class="text-muted float-end">Today</span>
+											</li>
+											<li class="list-group-item">
+												<i class="fas fa-user text-primary"></i> New parent <strong>Mrs. Das</strong> joined.
+												<span class="text-muted float-end">2 hrs ago</span>
+											</li>
+											<li class="list-group-item">
+												<i class="fas fa-book text-success"></i> New material added to <strong>Biology</strong>.
+												<span class="text-muted float-end">4 hrs ago</span>
+											</li>
+											<li class="list-group-item">
+												<i class="fas fa-calendar-alt text-info"></i> Meeting scheduled for <strong>Grade 10</strong>.
+												<span class="text-muted float-end">Tomorrow</span>
+											</li>
 										</ul>
 									</div>
-								</div>
-							</div>
-							<div class="col-md-5">
-								<div class="card">
-									<div class="card-body">
-										<div class="progress-card">
-											<div class="d-flex justify-content-between mb-1">
-												<span class="text-muted">Profit</span>
-												<span class="text-muted fw-bold"> $3K</span>
-											</div>
-											<div class="progress mb-2" style="height: 7px;">
-												<div class="progress-bar bg-success" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="78%"></div>
-											</div>
-										</div>
-										<div class="progress-card">
-											<div class="card mb-3">
-  												<div class="card-header">
-    												<h6 class="mb-0">Calendar</h6>
-  												</div>
-
-  												<div class="card-body p-0">
-    												<div id="calendar"></div>
-  </div>
-</div>
-
-											<div class="progress mb-2" style="height: 7px;">
-												<div class="progress-bar bg-info" role="progressbar" style="width: 65%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="65%"></div>
-											</div>
-										</div>
-										<div class="progress-card">
-											<div class="d-flex justify-content-between mb-1">
-												<span class="text-muted">Tasks Complete</span>
-												<span class="text-muted fw-bold"> 70%</span>
-											</div>
-											<div class="progress mb-2" style="height: 7px;">
-												<div class="progress-bar bg-primary" role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="70%"></div>
-											</div>
-										</div>
-										<div class="progress-card">
-											<div class="d-flex justify-content-between mb-1">
-												<span class="text-muted">Open Rate</span>
-												<span class="text-muted fw-bold"> 60%</span>
-											</div>
-											<div class="progress mb-2" style="height: 7px;">
-												<div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" data-toggle="tooltip" data-placement="top" title="60%"></div>
-											</div>
-										</div>
+									<div class="card-footer text-end">
+										<a class="btn btn-sm btn-link" href="#"><i class="fas fa-eye"></i> View All</a>
 									</div>
 								</div>
 							</div>
+
+							<div class="col-md-5">
+									<div class="card">
+										<div class="card-body">
+											<h5 class="card-title mb-3">📝 Task Reminders</h5>
+											<ul class="list-group list-group-flush">
+												<li class="list-group-item">
+													<i class="fas fa-upload text-primary"></i> Upload study material for <strong>Chemistry</strong>
+													<span class="text-muted float-end">Due: Today</span>
+												</li>
+												<li class="list-group-item">
+													<i class="fas fa-calendar-check text-success"></i> Confirm parent meeting for <strong>Grade 10</strong>
+													<span class="text-muted float-end">Due: Tomorrow</span>
+												</li>
+												<li class="list-group-item">
+													<i class="fas fa-chart-line text-warning"></i> Review performance reports
+													<span class="text-muted float-end">Due: This Week</span>
+												</li>
+												<li class="list-group-item">
+													<i class="fas fa-bell text-danger"></i> Send reminders for upcoming tests
+													<span class="text-muted float-end">Due: 2 Days</span>
+												</li>
+											</ul>
+										</div>
+										<div class="card-footer text-end">
+											<a class="btn btn-sm btn-link" href="#"><i class="fas fa-plus-circle"></i> Add Task</a>
+										</div>
+									</div>
+							</div>
+
 							<div class="col-md-3">
 								<div class="card card-stats">
 									<div class="card-body">
-										<p class="fw-bold mt-1">Statistic</p>
+										<p class="fw-bold mt-1">📅 Attendance Tracker</p>
+
+										<!-- Today's Attendance -->
 										<div class="row">
 											<div class="col-5">
-												<div class="icon-big text-center icon-warning">
-													<i class="la la-pie-chart text-warning"></i>
+												<div class="icon-big text-center text-success">
+													<i class="fas fa-user-check"></i>
 												</div>
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Number</p>
-													<h4 class="card-title">150GB</h4>
+													<p class="card-category">Present Today</p>
+													<h4 class="card-title">86%</h4>
 												</div>
 											</div>
 										</div>
+
 										<hr/>
+
+										<!-- Monthly Average -->
 										<div class="row">
 											<div class="col-5">
-												<div class="icon-big text-center">
-													<i class="la la-heart-o text-primary"></i>
+												<div class="icon-big text-center text-info">
+													<i class="fas fa-chart-bar"></i>
 												</div>
 											</div>
 											<div class="col-7 d-flex align-items-center">
 												<div class="numbers">
-													<p class="card-category">Followers</p>
-													<h4 class="card-title">+45K</h4>
+													<p class="card-category">Monthly Avg.</p>
+													<h4 class="card-title">91%</h4>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
+
 						</div>
-						<div class="row">
-							<div class="col-md-4">
-								<div class="card">
-									<div class="card-header">
-										<h4 class="card-title">Users Statistics</h4>
-										<p class="card-category">
-										Users statistics this month</p>
-									</div>
-									<div class="card-body">
-										<div id="monthlyChart" class="chart chart-pie"></div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-8">
-								<div class="card">
-									<div class="card-header">
-										<h4 class="card-title">2018 Sales</h4>
-										<p class="card-category">
-										Number of products sold</p>
-									</div>
-									<div class="card-body">
-										<div id="salesChart" class="chart"></div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="card">
-									<div class="card-header ">
-										<h4 class="card-title">Table</h4>
-										<p class="card-category">Users Table</p>
-									</div>
-									<div class="card-body">
-										<table class="table table-head-bg-success table-striped table-hover">
-											<thead>
-												<tr>
-													<th scope="col">#</th>
-													<th scope="col">First</th>
-													<th scope="col">Last</th>
-													<th scope="col">Handle</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td>1</td>
-													<td>Mark</td>
-													<td>Otto</td>
-													<td>@mdo</td>
-												</tr>
-												<tr>
-													<td>2</td>
-													<td>Jacob</td>
-													<td>Thornton</td>
-													<td>@fat</td>
-												</tr>
-												<tr>
-													<td>3</td>
-													<td colspan="2">Larry the Bird</td>
-													<td>@twitter</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="card card-tasks">
-									<div class="card-header ">
-										<h4 class="card-title">Tasks</h4>
-										<p class="card-category">To Do List</p>
-									</div>
-									<div class="card-body ">
-										<div class="table-full-width">
-											<table class="table">
-												<thead>
-													<tr>
-														<th>
-															<div class="form-check">
-																<label class="form-check-label">
-																	<input class="form-check-input  select-all-checkbox" type="checkbox" data-select="checkbox" data-target=".task-select">
-																	<span class="form-check-sign"></span>
-																</label>
-															</div>
-														</th>
-														<th>Task</th>
-														<th>Action</th>
-													</tr>
-												</thead>
-												<tbody>
-													<tr>
-														<td>
-															<div class="form-check">
-																<label class="form-check-label">
-																	<input class="form-check-input task-select" type="checkbox">
-																	<span class="form-check-sign"></span>
-																</label>
-															</div>
-														</td>
-														<td>Planning new project structure</td>
-														<td class="td-actions text-right">
-															<div class="form-button-action">
-																<button type="button" data-toggle="tooltip" title="Edit Task" class="btn btn-link <btn-simple-primary">
-																	<i class="la la-edit"></i>
-																</button>
-																<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-link btn-simple-danger">
-																	<i class="la la-times"></i>
-																</button>
-															</div>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<div class="form-check">
-																<label class="form-check-label">
-																	<input class="form-check-input task-select" type="checkbox">
-																	<span class="form-check-sign"></span>
-																</label>
-															</div>
-														</td>
-														<td>Update Fonts</td>
-														<td class="td-actions text-right">
-															<div class="form-button-action">
-																<button type="button" data-toggle="tooltip" title="Edit Task" class="btn btn-link <btn-simple-primary">
-																	<i class="la la-edit"></i>
-																</button>
-																<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-link btn-simple-danger">
-																	<i class="la la-times"></i>
-																</button>
-															</div>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<div class="form-check">
-																<label class="form-check-label">
-																	<input class="form-check-input task-select" type="checkbox">
-																	<span class="form-check-sign"></span>
-																</label>
-															</div>
-														</td>
-														<td>Add new Post
-														</td>
-														<td class="td-actions text-right">
-															<div class="form-button-action">
-																<button type="button" data-toggle="tooltip" title="Edit Task" class="btn btn-link <btn-simple-primary">
-																	<i class="la la-edit"></i>
-																</button>
-																<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-link btn-simple-danger">
-																	<i class="la la-times"></i>
-																</button>
-															</div>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<div class="form-check">
-																<label class="form-check-label">
-																	<input class="form-check-input task-select" type="checkbox">
-																	<span class="form-check-sign"></span>
-																</label>
-															</div>
-														</td>
-														<td>Finalise the design proposal</td>
-														<td class="td-actions text-right">
-															<div class="form-button-action">
-																<button type="button" data-toggle="tooltip" title="Edit Task" class="btn btn-link <btn-simple-primary">
-																	<i class="la la-edit"></i>
-																</button>
-																<button type="button" data-toggle="tooltip" title="Remove" class="btn btn-link btn-simple-danger">
-																	<i class="la la-times"></i>
-																</button>
-															</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-									<div class="card-footer ">
-										<div class="stats">
-											<i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
-										</div>
-									</div>
-								</div>
-							</div>
+						
+							
 						</div>
 					</div>
 				</div>
@@ -607,9 +521,7 @@ session_start();
 						<nav class="pull-left">
 							<ul class="nav">
 								<li class="nav-item">
-									<a class="nav-link" href="http://www.themekita.com">
-										ThemeKita
-									</a>
+									
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="#">
@@ -624,7 +536,7 @@ session_start();
 							</ul>
 						</nav>
 						<div class="copyright ml-auto">
-							2018, made with <i class="la la-heart heart text-danger"></i> by <a href="http://www.themekita.com">ThemeKita</a>
+							2025, made </i> by <a href="#">AJ And Team</a>
 						</div>				
 					</div>
 				</footer>
@@ -641,11 +553,7 @@ session_start();
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body text-center">									
-					<p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
-					<p>
-						<b>We'll let you know when it's done</b></p>
-				</div>
+				
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
@@ -659,7 +567,7 @@ session_start();
 <script src="assets/js/core/bootstrap.min.js"></script>
 <script src="assets/js/plugin/chartist/chartist.min.js"></script>
 <script src="assets/js/plugin/chartist/plugin/chartist-plugin-tooltip.min.js"></script>
-<script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
 <script src="assets/js/plugin/bootstrap-toggle/bootstrap-toggle.min.js"></script>
 <script src="assets/js/plugin/jquery-mapael/jquery.mapael.min.js"></script>
 <script src="assets/js/plugin/jquery-mapael/maps/world_countries.min.js"></script>
@@ -668,3 +576,9 @@ session_start();
 <script src="assets/js/ready.min.js"></script>
 <script src="assets/js/demo.js"></script>
 </html>
+<?php
+if (isset($_POST['logout'])) {
+	session_destroy();
+	header("Location: adminlogin.php");
+	exit();
+}
