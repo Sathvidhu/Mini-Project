@@ -1,8 +1,25 @@
+<?php
+session_start();
+$con = mysqli_connect("localhost", "root", "", "smartstudy"); // your DB connection file
+
+// Get class from session
+$class = $_SESSION['class'] ?? 'N/A';
+if (!$class) {
+    die("Class not set in session.");
+}
+
+// Fetch distinct subjects for the student's class
+$subjectQuery = $con->prepare("SELECT DISTINCT subject FROM pdf_uploads WHERE class = ?");
+$subjectQuery->bind_param("s", $class);
+$subjectQuery->execute();
+$subjectsResult = $subjectQuery->get_result();
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <title>View PDFs</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <title class="fa fa-user-graduate mr-3">Smart Study Planner</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     
@@ -22,8 +39,10 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+    <style>
+        .subject-card { margin-bottom: 15px; }
+    </style>
 </head>
-
 <body>
     <!-- Topbar Start -->
     <div class="container-fluid bg-dark">
@@ -39,12 +58,11 @@
         </div>
     </div>
     <!-- Topbar End -->
-
-
-    <!-- Navbar Start -->
+     <!-- Navbar Start -->
     <div class="container-fluid p-0">
         <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0 px-lg-5">
             <a href="index.html" class="navbar-brand ml-lg-3">
+                
                 <h1 class="m-0 text-uppercase text-primary"><i class="fa fa-user-graduate mr-3"></i>Smart Studey Planner</h1>
             </a>
             <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -57,61 +75,57 @@
         </nav>
     </div>
     <!-- Navbar End -->
+    <div class="container mt-4">
+        <h2 class="mb-4">Available PDFs for Class: <?php echo htmlspecialchars($class); ?></h2>
 
+    <?php if ($subjectsResult->num_rows > 0): ?>
+        <div class="accordion" id="subjectAccordion">
+            <?php 
+            $i = 1;
+            while ($subjectRow = $subjectsResult->fetch_assoc()): 
+                $subject = $subjectRow['subject'];
 
-    <!-- Header Start -->
-    <div class="container py-5">
-    <h1 class="text-center text-primary mb-4">PDF'S</h1>
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped text-center">
-            <thead class="thead-dark">
-                <tr>
-                    <th>Chapter Name</th>
-                    <th>YouTube Link</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Chapter 1: Introduction</td>
-                    <td><a href="smart/pdf/adithyan.pdf" target="_blank" rel="noopener noreferrer">View PDF</a></td>
-                </tr>
+                // Fetch PDFs chapter-wise for this subject
+                $pdfQuery = $con->prepare("SELECT * FROM pdf_uploads WHERE class = ? AND subject = ? ORDER BY chapter_number ASC");
+                $pdfQuery->bind_param("ss", $class, $subject);
+                $pdfQuery->execute();
+                $pdfs = $pdfQuery->get_result();
+            ?>
+            <div class="accordion-item subject-card">
+                <h2 class="accordion-header" id="heading<?php echo $i; ?>">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $i; ?>" aria-expanded="false" aria-controls="collapse<?php echo $i; ?>">
+                        <?php echo htmlspecialchars($subject); ?>
+                    </button>
+                </h2>
+                <div id="collapse<?php echo $i; ?>" class="accordion-collapse collapse" aria-labelledby="heading<?php echo $i; ?>" data-bs-parent="#subjectAccordion">
+                    <div class="accordion-body">
+                        <?php if ($pdfs->num_rows > 0): ?>
+                            <ul class="list-group">
+                                <?php while ($pdf = $pdfs->fetch_assoc()): ?>
+                                    <li class="list-group-item">
+                                        Chapter <?php echo htmlspecialchars($pdf['chapter_number']); ?> - 
+                                        <a href="smartstudy/<?php echo htmlspecialchars($pdf['file_path']); ?>" target="_blank">View PDF</a>
 
-                <tr>
-                    <td>Chapter 2: Basics</td>
-                    <td><a href="https://youtu.be/def456" target="_blank">Watch Video</a></td>
-                </tr>
-                <tr>
-                    <td>Chapter 3: Data Structures</td>
-                    <td><a href="https://youtu.be/ghi789" target="_blank">Watch Video</a></td>
-                </tr>
-                <tr>
-                    <td>Chapter 4: Functions</td>
-                    <td><a href="https://youtu.be/jkl012" target="_blank">Watch Video</a></td>
-                </tr>
-                <tr>
-                    <td>Chapter 5: OOP Concepts</td>
-                    <td><a href="https://youtu.be/mno345" target="_blank">Watch Video</a></td>
-                </tr>
-                <tr>
-                    <td>Chapter 6: File Handling</td>
-                    <td><a href="https://youtu.be/pqr678" target="_blank">Watch Video</a></td>
-                </tr>
-                <tr>
-                    <td>Chapter 7: Final Project</td>
-                    <td><a href="https://youtu.be/stu901" target="_blank">Watch Video</a></td>
-                </tr>
-            </tbody>
-        </table>
+                                        
+                                    </li>
+                                <?php endwhile; ?>
+                            </ul>
+                        <?php else: ?>
+                            <p>No PDFs available for this subject.</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+            <?php 
+                $i++;
+            endwhile; 
+            ?>
+        </div>
+    <?php else: ?>
+        <p>No subjects found for your class.</p>
+    <?php endif; ?>
     </div>
-</div>
-
-    <!-- Header End -->
-
-
-    
-
-
-    <!-- Footer Start -->
+<!-- Footer Start -->
     <div class="container-fluid position-relative overlay-top bg-dark text-white-50 py-5" style="margin-top: 90px;">
         <div class="container mt-5 pt-5">
             <div class="row">
@@ -154,6 +168,6 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

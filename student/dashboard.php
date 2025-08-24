@@ -225,21 +225,20 @@ function selectSubject(subject) {
                 </div>
                 </div>
             
+                    <div class="col-lg-4 col-md-6 pb-4">
+                        <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="take_mocktest.php">
+                            <img class="img-fluid" src="img/courses-2.jpg" alt="">
+                            <div class="courses-text">
+                                <h4 class="text-center text-white px-3">Mock Test</h4>
+                                <div class="border-top w-100 mt-3"></div>
+                            </div>
+                        </a>
+                    </div>
+
 
                 <div class="col-lg-4 col-md-6 pb-4">
-                    <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="mocktest.php">
-                        <img class="img-fluid" src="img/courses-2.jpg" alt="">
-                        <div class="courses-text">
-                            <h4 class="text-center text-white px-3">Mock Test</h4>
-                            <div class="border-top w-100 mt-3">
-                                
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-md-6 pb-4">
                     <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="pdf.php">
-                        <img class="img-fluid" src="img/courses-3.jpg" alt="">
+                                <img class="img-fluid" src="img/courses-3.jpg" alt="">
                         <div class="courses-text">
                             <h4 class="text-center text-white px-3">PDF'S</h4>
                             <div class="border-top w-100 mt-3">
@@ -248,6 +247,8 @@ function selectSubject(subject) {
                         </div>
                     </a>
                 </div>
+
+
                 <div class="col-lg-4 col-md-6 pb-4">
                     <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="questionpaper.php">
                         <img class="img-fluid" src="img/courses-4.jpg" alt="">
@@ -260,10 +261,10 @@ function selectSubject(subject) {
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-6 pb-4">
-                    <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="#">
+                    <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="timetablee.php">
                         <img class="img-fluid" src="img/courses-5.jpg" alt="">
                         <div class="courses-text">
-                            <h4 class="text-center text-white px-3">Attandance</h4>
+                            <h4 class="text-center text-white px-3">Time Table</h4>
                             <div class="border-top w-100 mt-3">
                                 
                             </div>
@@ -271,7 +272,7 @@ function selectSubject(subject) {
                     </a>
                 </div>
                 <div class="col-lg-4 col-md-6 pb-4">
-                    <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="mark.php">
+                    <a class="courses-list-item position-relative d-block overflow-hidden mb-2" href="view_result.php">
                         <img class="img-fluid" src="img/courses-6.jpg" alt="">
                         <div class="courses-text">
                             <h4 class="text-center text-white px-3">Mark List</h4>

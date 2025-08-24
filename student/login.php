@@ -1,6 +1,6 @@
 <?php
 session_start();
-// Initialize email session variable
+
 ?>
 
 
@@ -76,6 +76,17 @@ session_start();
             margin-top: 5px;
         }
     </style>
+    <?php
+
+
+function logActivity($conn, $email, $activity) {
+    $stmt = $conn->prepare("INSERT INTO student_activity (student_email, activity) VALUES (?, ?)");
+    $stmt->bind_param("ss", $email, $activity);
+    $stmt->execute();
+    $stmt->close();
+}
+?>
+
     </head>    
     <body>
         <form method = "post" action="" >
@@ -126,15 +137,41 @@ if(isset($_POST['submit'])) {
 
     // 4. Verify credentials
     $stmt = $conn->prepare(
-        'SELECT attandance, last_attendance, profile
-         FROM   registration
-         WHERE  email = ? AND pass1 = ?'
-    );
+    'SELECT fname, class, attandance, last_attendance, profile
+    FROM  registration
+    WHERE email = ? AND pass1 = ?'
+);
+$stmt->bind_param('ss', $email, $pass1);
+
+// 3. Execute statement
+$stmt->execute();
+
+// 4. Get result from statement
+$result = $stmt->get_result();
+
+// 5. Check if student exists
+if ($result->num_rows === 1) {
+    $row = $result->fetch_assoc();
+
+    // ✅ Fetch and store extra session variables
+    $fname = $row['fname'];
+    $class = $row['class'];
+
+    $_SESSION['fname'] = $fname;
+    $_SESSION['class'] = $class;
+
+    // Continue with attendance logic...
+} else {
+    // Failed login → handle error...
+}
+
+
     $stmt->bind_param('ss', $email, $pass1);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows === 0) {
+        logActivity($conn, $email, "Login failed");
         showAlert('error',
                   'Login Not Successful!',
                   'Incorrect password. Please try again.',
@@ -174,10 +211,12 @@ if(isset($_POST['submit'])) {
             });
         </script>";
     } else {
+        logActivity($conn, $email, "Logged in");
         showAlert('success',
                   'Login Successful!',
                   'Redirecting to Student Dashboard...',
                   'dashboard.php');
+                  
     }
 }
 

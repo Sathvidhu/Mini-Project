@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Study Tips | Smart Study Planner</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        Swal.fire({
+            title: "Motivation 💪",
+            text: "Push yourself, because no one else is going to do it for you.",
+            imageUrl: "https://cdn-icons-png.flaticon.com/512/742/742751.png",  // Smiley face icon
+            imageWidth: 80,
+            imageHeight: 80,
+            confirmButtonText: "Got it!"
+        });
+    });
+</script>
+    <!-- Back Button -->
+    <nav class="p-3">
+        <a href="index.php" class="btn btn-outline-info">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="bg-success text-white text-center py-5">
+        <div class="container">
+            <h1 class="display-4 font-weight-bold">Study Tips</h1>
+            <p class="lead">Boost your learning with smart techniques</p>
+        </div>
+    </section>
+
+    <!-- Tips Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+
+                <!-- Tip 1 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-clock text-success"></i> Manage Your Time</h5>
+                            <p class="card-text text-muted">
+                                Break your study sessions into focused time blocks and take short breaks in between to stay fresh.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tip 2 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-tasks text-success"></i> Prioritize Weak Subjects</h5>
+                            <p class="card-text text-muted">
+                                Spend extra time on topics you struggle with while keeping up with strong subjects.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tip 3 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-book-reader text-success"></i> Active Learning</h5>
+                            <p class="card-text text-muted">
+                                Engage with the material by summarizing notes, teaching concepts, and solving practice questions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tip 4 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-bed text-success"></i> Rest Well</h5>
+                            <p class="card-text text-muted">
+                                Get 7-8 hours of sleep to keep your brain alert and ready to learn effectively.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tip 5 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-dumbbell text-success"></i> Stay Active</h5>
+                            <p class="card-text text-muted">
+                                Regular physical activity helps improve focus, memory, and energy levels.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tip 6 -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-bullseye text-success"></i> Set Goals</h5>
+                            <p class="card-text text-muted">
+                                Define daily or weekly goals to stay motivated and track your progress.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+  <!-- Quotes Section with Photos -->
+<section class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Inspiring Quotes</h2>
+
+        <div class="row">
+            <!-- Quote 1 -->
+            <div class="col-md-6 mb-4">
+                <blockquote class="blockquote bg-white p-4 shadow-sm rounded">
+                    <p class="mb-3">"The future depends on what you do today."</p>
+                    <footer class="blockquote-footer d-flex align-items-center">
+                        <img src="../img/Mahatma_Gandhi.jpg" 
+                             alt="Mahatma Gandhi" class="rounded-circle mr-2" width="40" height="40">
+                        Mahatma Gandhi
+                    </footer>
+                </blockquote>
+            </div>
+
+            <!-- Quote 2 -->
+            <div class="col-md-6 mb-4">
+                <blockquote class="blockquote bg-white p-4 shadow-sm rounded">
+                    <p class="mb-3">"Success is the sum of small efforts repeated day in and day out."</p>
+                    <footer class="blockquote-footer d-flex align-items-center">
+                        <img src="../img/Robert_Collier.jpg"
+                             alt="Robert Collier" class="rounded-circle mr-2" width="40" height="40">
+                        Robert Collier
+                    </footer>
+                </blockquote>
+            </div>
+
+            <!-- Quote 3 -->
+            <div class="col-md-6 mb-4">
+                <blockquote class="blockquote bg-white p-4 shadow-sm rounded">
+                    <p class="mb-3">"Don’t watch the clock; do what it does. Keep going."</p>
+                    <footer class="blockquote-footer d-flex align-items-center">
+                        <img src="../img/Sam_Levenson.jpg" 
+                             alt="Sam Levenson" class="rounded-circle mr-2" width="40" height="40">
+                        Sam Levenson
+                    </footer>
+                </blockquote>
+            </div>
+
+            <!-- Quote 4 -->
+            <div class="col-md-6 mb-4">
+    <blockquote class="blockquote bg-white p-4 shadow-sm rounded">
+        <p class="mb-3">"You have to dream before your dreams can come true."</p>
+        <footer class="blockquote-footer d-flex align-items-center">
+            <img src="../img/Apj.jpg" 
+                 alt="A.P.J. Abdul Kalam" class="rounded-circle mr-2" width="40" height="40">
+            A.P.J. Abdul Kalam
+        </footer>
+    </blockquote>
+</div>
+
+        </div>
+    </div>
+</section>
+
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-3">
+        <p class="mb-0">&copy; 2025 Smart Study Planner. All rights reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

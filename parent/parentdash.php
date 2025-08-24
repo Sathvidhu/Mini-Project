@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -78,15 +80,13 @@
         <tr>
           <th>Date</th>
           <th>Status</th>
+          <th>Time Spent</th>
         </tr>
         <tr>
-          <td>2025-06-20</td>
+          <td>2023-10-01</td>
           <td>Present</td>
-        </tr>
-        <tr>
-          <td>2025-06-21</td>
-          <td>Absent</td>
-        </tr>
+          <td>2 hours</td>  
+        
       </table>
     </div>
 

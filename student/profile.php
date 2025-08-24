@@ -68,6 +68,16 @@ $email = $_SESSION['email'];
             background: #3498db;
         }
     </style>
+    <?php
+
+
+function logActivity($conn, $email, $activity) {
+    $stmt = $conn->prepare("INSERT INTO student_activity (student_email, activity) VALUES (?, ?)");
+    $stmt->bind_param("ss", $email, $activity);
+    $stmt->execute();
+    $stmt->close();
+}
+?>
 </head>
 <body>
 
@@ -80,6 +90,22 @@ $email = $_SESSION['email'];
             <td><label>Profile Photo</label></td>
             <td colspan="3"><input type="file" placeholder="Upload Profile Photo" name="profile" accept="image/*" ></td>
         </tr>-->
+        <tr>
+            <td colspan="4" align="center"><strong>Parent Details</strong></td>
+        </tr>
+        <tr>
+            <td><label for="parentname">Parent Name</label></td>
+            <td colspan="3"><input type="text" id="parentname" name="pname" placeholder="Parent Name" required></td>
+        </tr>
+        <tr>
+            <td><label for="mobilenumber">Mobile Number</label></td>
+            <td colspan="3"><input type="text" id="mobilenumber" name="mobilenumber" placeholder="Mobile Number" required></td>
+        </tr>
+        <tr>
+            <td><label for="email">E-mail</label></td>
+            <td colspan="3"><input type="email" id="pemail" name="pemail" placeholder="E-mail" required></td>
+        </tr>
+
         <tr>
             <td colspan="4" align="center"><strong>School Details</strong></td>
         </tr>
@@ -132,55 +158,64 @@ $email = $_SESSION['email'];
         
     </table>
     <?php
- if(isset($_POST["submit"] ))
-    {
- $corn = mysqli_connect("localhost","root","","smartstudy");
- extract ($_POST);
-$d = "UPDATE registration SET 
-    sname = '$sname',
-    time1 = '$time1',
-    time2 = '$time2',
-    physicsmark = '$physicsmark',
-    chemistrymark = '$chemistrymark',
-    mathsmark = '$mathsmark',
-    biologymark = '$biologymark',
-    extracurricular = '$extracurricular',
-    hobbies = '$hobbies',
-    profile = 1
-WHERE email = '$email'";
- $a = mysqli_query($corn,$d);
-  if($a){
-    ?>
-    <script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Profile Updated Successfully!',
-        text: 'You will now be redirected to Dashboard.',
-        //html: ''
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'OK'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location = "dashboard.php";
-        }
-    });
-    $profileOk++; // Set profileOk to 1 to indicate profile completion
-</script>
+if (isset($_POST["submit"])) {
+    $corn = mysqli_connect("localhost", "root", "", "smartstudy");
+    extract($_POST);
 
+    $d = "UPDATE registration SET 
+        sname = '$sname',
+        time1 = '$time1',
+        time2 = '$time2',
+        physicsmark = '$physicsmark',
+        chemistrymark = '$chemistrymark',
+        mathsmark = '$mathsmark',
+        biologymark = '$biologymark',
+        extracurricular = '$extracurricular',
+        hobbies = '$hobbies',
+        pname = '$pname',
+        mobilenumber = '$mobilenumber',
+        pemail = '$pemail',
+        profile = 1
+        WHERE email = '$email'";
 
-      <?php
-  }
-  else{
-    ?>
-    <script>
-        alert("Profile Not Updated");
-        window.location ="profile.php";
+    $a = mysqli_query($corn, $d);
+
+    if ($a) {
+        // ✅ Call activity log here in PHP
+        logActivity($corn, $email, "Profile updated");
+        ?>
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Profile Updated Successfully!',
+                text: 'You will now be redirected to Dashboard.',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = "dashboard.php";
+                }
+            });
         </script>
         <?php
-  }
-                }
-
+    } else {
+        ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Profile Not Updated',
+                text: 'Something went wrong. Try again.',
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location = "profile.php";
+            });
+        </script>
+        <?php
+    }
+}
 ?>
+
 </form>
 
 </body>

@@ -30,6 +30,22 @@
     }
   }
 </script>
+<?php
+session_start();
+$loggedIn = isset($_SESSION['email']); // or your login variable
+?>
+
+<script>
+function showLoginAlert() {
+    Swal.fire({
+        icon: 'warning',
+        title: 'Login Required',
+        text: 'Please login first to access this service.',
+        confirmButtonText: 'OK'
+    });
+}
+</script>
+
         
     </script>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -108,16 +124,16 @@
             </button>
             <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
                 <div class="navbar-nav mx-auto py-0">
-                   <!-- <a href="index.php" class="nav-item nav-link active">Home</a>-->
+                  
                     <a href="about.html" class="nav-item nav-link">About</a>
-                    <a href="course.html" class="nav-item nav-link">Study Tips</a>
+                    <a href="studytips.html" class="nav-item nav-link">Study Tips</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Classes</a>
+                        <a style="text-align: center;" href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Classes</a>
                         <div class="dropdown-menu m-0">
                             <a href="#" class="dropdown-item">Class 8</a>
                             <a href="feature.html" class="dropdown-item">Class 9</a>
                             <a href="team.html" class="dropdown-item">Class 10</a>
-                           <!-- <a href="testimonial.html" class="dropdown-item">Testimonial</a>-->
+                           
                         </div>
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
@@ -206,42 +222,7 @@
     </div>
     <!-- About End -->
 
-<div class="row justify-content-center bg-image mx-0 mb-5">
-            <div class="col-lg-6 py-5">
-                <div class="bg-white p-5 my-5">
-                    <h1 class="text-center mb-4">Why You Are Waiting!!</h1>
-                    <form method="post" action="">
-                    <div class="form-row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control bg-light border-0" placeholder="Your Name" style="padding: 30px 20px;">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <input type="email" class="form-control bg-light border-0" placeholder="Your Email" style="padding: 30px 20px;">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <select class="custom-select bg-light border-0 px-3" style="height: 60px;">
-                                    <option selected>Select Class</option>
-                                    <option value="1">Class 8</option>
-                                    <option value="2">Class 9</option>
-                                    <option value="3">Class 10</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <button class="btn btn-primary btn-block" type="submit" name="regi" id="regi" style="height: 60px;">Register Now</button>
-                        </div>
-                    </div>
-                </form>
-                </div>
-            </div>
-        </div>
+
 
 
     <!-- Team Start -->
@@ -257,13 +238,7 @@
                     <div class="bg-light text-center p-4">
                         <h5 class="mb-3">Amrutha</h5>
                         <p class="mb-2">Physics Deparment</p>
-                        <div class="d-flex justify-content-center">
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="team-item">
@@ -271,13 +246,7 @@
                     <div class="bg-light text-center p-4">
                         <h5 class="mb-3">Kiran K</h5>
                         <p class="mb-2">Chemistry Department</p>
-                        <div class="d-flex justify-content-center">
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="team-item">
@@ -285,13 +254,7 @@
                     <div class="bg-light text-center p-4">
                         <h5 class="mb-3">Swetha</h5>
                         <p class="mb-2">Maths Deparment</p>
-                        <div class="d-flex justify-content-center">
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="team-item">
@@ -299,13 +262,7 @@
                     <div class="bg-light text-center p-4">
                         <h5 class="mb-3">Kamal</h5>
                         <p class="mb-2">Biology Department</p>
-                        <div class="d-flex justify-content-center">
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-twitter"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-facebook-f"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-linkedin-in"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-instagram"></i></a>
-                            <a class="mx-1 p-1" href="#"><i class="fab fa-youtube"></i></a>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -316,37 +273,35 @@
 
     <!-- Testimonial Start -->
     <div class="container-fluid bg-image py-5" style="margin: 90px 0;">
-        <div class="container py-5">
-            <div class="row align-items-center">
-                <div class="col-lg-5 mb-5 mb-lg-0">
-                    <div class="section-title position-relative mb-4">
-                        <h6 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Testimonial</h6>
-                        <h1 class="display-4">What Say Our Students</h1>
-                    </div>
-                    <p class="m-0">Dolor est dolores et nonumy sit labore dolores est sed rebum amet, justo duo ipsum sanctus dolore magna rebum sit et. Diam lorem ea sea at. Nonumy et at at sed justo est nonumy tempor. Vero sea ea eirmod, elitr ea amet diam ipsum at amet. Erat sed stet eos ipsum diam</p>
+    <div class="container py-5">
+        <div class="row align-items-center">
+            <div class="col-lg-5 mb-5 mb-lg-0">
+                <div class="section-title position-relative mb-4">
+                    <h1 class="display-4">What Say Our Students</h1>
                 </div>
-                <div class="col-lg-7">
-                    <div class="owl-carousel testimonial-carousel">
-                        <div class="bg-white p-5">
-                            <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
-                            <p>Sed et elitr ipsum labore dolor diam, ipsum duo vero sed sit est est ipsum eos clita est ipsum. Est nonumy tempor at kasd. Sed at dolor duo ut dolor, et justo erat dolor magna sed stet amet elitr duo lorem</p>
-                            <div class="d-flex flex-shrink-0 align-items-center mt-4">
-                                <img class="img-fluid mr-4" src="img/testimonial-2.jpg" alt="">
-                                <div>
-                                    <h5>Student Name</h5>
-                                    <span>Web Design</span>
-                                </div>
+                <p class="m-0">Our Smart Study Planner has helped students manage their time better, focus on weaker subjects, and stay consistent in their study routine. Hear from those who’ve used it to improve their academic performance.</p>
+            </div>
+            <div class="col-lg-7">
+                <div class="owl-carousel testimonial-carousel">
+                    <div class="bg-white p-5">
+                        <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
+                        <p>The Smart Study Planner really helped me focus more on subjects I was weak in. I used to struggle with time management, but now my schedule is more organized and I can revise everything on time.</p>
+                        <div class="d-flex flex-shrink-0 align-items-center mt-4">
+                            <img class="img-fluid mr-4" src="img/testimonial-2.jpg" alt="">
+                            <div>
+                                <h5>Suraj</h5>
+                                <span>Class 9th</span>
                             </div>
                         </div>
-                        <div class="bg-white p-5">
-                            <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
-                            <p>Sed et elitr ipsum labore dolor diam, ipsum duo vero sed sit est est ipsum eos clita est ipsum. Est nonumy tempor at kasd. Sed at dolor duo ut dolor, et justo erat dolor magna sed stet amet elitr duo lorem</p>
-                            <div class="d-flex flex-shrink-0 align-items-center mt-4">
-                                <img class="img-fluid mr-4" src="img/testimonial-1.jpg" alt="">
-                                <div>
-                                    <h5>Student Name</h5>
-                                    <span>Web Design</span>
-                                </div>
+                    </div>
+                    <div class="bg-white p-5">
+                        <i class="fa fa-3x fa-quote-left text-primary mb-4"></i>
+                        <p>I love how easy it is to use the planner. It suggests a study timetable based on my previous marks, so I can focus more on difficult subjects. It’s a great tool for students like me.</p>
+                        <div class="d-flex flex-shrink-0 align-items-center mt-4">
+                            <img class="img-fluid mr-4" src="img/testimonial-1.jpg" alt="">
+                            <div>
+                                <h5>Amala</h5>
+                                <span>Class 10th</span>
                             </div>
                         </div>
                     </div>
@@ -354,6 +309,8 @@
             </div>
         </div>
     </div>
+</div>
+
     <!-- Testimonial Start -->
 
 
@@ -364,24 +321,33 @@
     <div class="container-fluid position-relative overlay-top bg-dark text-white-50 py-5" style="margin-top: 90px;">
         <div class="container mt-5 pt-5">
             <div class="row">
-                <div class="col-md-6 mb-5">
-                    <a href="index.html" class="navbar-brand">
-                        <h1 class="mt-n2 text-uppercase text-white"><i class="fa fa-user-graduate mr-3"></i>SmartStudy</h1>
-                    </a>
-                    <p class="m-0">SmartStudy Planner is a user-friendly tool designed to help students organize their study schedules effectively. It allows users to plan their daily tasks, set goals, and keep track of their academic progress. With its clean interface and helpful features, SmartStudy Planner makes time management easier, helping students stay focused and reduce stress during exams and assignments.</p>
-                </div>
-                <div class="col-md-6 mb-5">
-                    <h3 class="text-white mb-4">Login Here</h3>
-                    <div class="w-100">
-                        <div class="input-group">
-                            <input type="text" class="form-control border-light" style="padding: 30px;" placeholder="Your Email Address">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary px-4">Login</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Left Column: SmartStudy text -->
+    <div class="col-md-6 mb-5">
+        <a href="index.html" class="navbar-brand">
+            <h1 class="mt-n2 text-uppercase text-white">
+                <i class="fa fa-user-graduate mr-3"></i>SmartStudy
+            </h1>
+        </a>
+        <p class="m-0">
+            SmartStudy Planner is a user-friendly tool designed to help students organize
+            their study schedules effectively. It allows users to plan their daily tasks, set goals,
+            and keep track of their academic progress. With its clean interface and helpful features,
+            SmartStudy Planner makes time management easier, helping students stay focused and reduce
+            stress during exams and assignments.
+        </p>
+    </div>
+
+    <!-- Right Column: APJ image + quote -->
+    <div class="col-md-6 mb-5 text-center">
+        <img src="../img/Apj.jpg" alt="APJ Abdul Kalam"
+             style="height:90px; width:90px; border-radius:50%; object-fit:cover;">
+        <p class="text-white font-weight-bold mt-3" style="font-size:14px; line-height:1.4;">
+            "Dream, dream, dream. Dreams transform into thoughts and thoughts result in action."
+        </p>
+    </div>
+</div>
+
+                
             <div class="row">
                 <div class="col-md-4 mb-5">
                     <h3 class="text-white mb-4">Get In Touch</h3>
@@ -394,17 +360,28 @@
                         <a class="text-white" href="#"><i class="fab fa-2x fa-instagram"></i></a>
                     </div>
                 </div>
-                <div class="col-md-4 mb-5">
+               <div class="col-md-4 mb-5">
                     <h3 class="text-white mb-4">Our Services</h3>
                     <div class="d-flex flex-column justify-content-start">
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Focus Sessions</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Time Management Tracker</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Crate Time Table</a>
-                        <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Chapterwise Question Paper</a>
-                        <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Exams</a>
+                        <?php if (!$loggedIn): ?>
+                            <a class="text-white-50 mb-2" href="javascript:void(0);" onclick="showLoginAlert()"><i class="fa fa-angle-right mr-2"></i>Focus Sessions</a>
+                            <a class="text-white-50 mb-2" href="javascript:void(0);" onclick="showLoginAlert()"><i class="fa fa-angle-right mr-2"></i>Time Management Tracker</a>
+                            <a class="text-white-50 mb-2" href="javascript:void(0);" onclick="showLoginAlert()"><i class="fa fa-angle-right mr-2"></i>Create Time Table</a>
+                            <a class="text-white-50 mb-2" href="javascript:void(0);" onclick="showLoginAlert()"><i class="fa fa-angle-right mr-2"></i>Chapterwise Question Paper</a>
+                            <a class="text-white-50" href="javascript:void(0);" onclick="showLoginAlert()"><i class="fa fa-angle-right mr-2"></i>Exams</a>
+                        <?php else: ?>
+                            <!-- Real links when logged in -->
+                            <a class="text-white-50 mb-2" href="focus.php"><i class="fa fa-angle-right mr-2"></i>Focus Sessions</a>
+                            <a class="text-white-50 mb-2" href="tracker.php"><i class="fa fa-angle-right mr-2"></i>Time Management Tracker</a>
+                            <a class="text-white-50 mb-2" href="timetable.php"><i class="fa fa-angle-right mr-2"></i>Create Time Table</a>
+                            <a class="text-white-50 mb-2" href="question-paper.php"><i class="fa fa-angle-right mr-2"></i>Chapterwise Question Paper</a>
+                            <a class="text-white-50" href="exams.php"><i class="fa fa-angle-right mr-2"></i>Exams</a>
+                        <?php endif; ?>
                     </div>
                 </div>
-                <!--<div class="col-md-4 mb-5">
+                
+
+                <div class="col-md-4 mb-5">
                     <h3 class="text-white mb-4">Quick Links</h3>
                     <div class="d-flex flex-column justify-content-start">
                         <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Privacy Policy</a>
@@ -413,7 +390,7 @@
                         <a class="text-white-50 mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Help & Support</a>
                         <a class="text-white-50" href="#"><i class="fa fa-angle-right mr-2"></i>Contact</a>
                     </div>
-                </div>-->
+                </div>
             </div>
         </div>
     </div>

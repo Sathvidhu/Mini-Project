@@ -85,6 +85,16 @@
             margin-top: 5px;
         }
     </style>
+    <?php
+
+
+function logActivity($conn, $email, $activity) {
+    $stmt = $conn->prepare("INSERT INTO student_activity (student_email, activity) VALUES (?, ?)");
+    $stmt->bind_param("ss", $email, $activity);
+    $stmt->execute();
+    $stmt->close();
+}
+?>
     </head>    
     <body>
         <form method = "post" action="" onsubmit = "return checkpass();">
@@ -151,42 +161,50 @@
                 </tr>
             </table>
 <?php
- if(isset($_POST["submit"] ))
-                {
- $corn = mysqli_connect("localhost","root","","smartstudy");
- extract ($_POST);
- $d ="insert into registration(fname ,class ,age ,email ,gender , pass1) values('$fname','$class','$age','$email','$gender','$pass1')";
- $a = mysqli_query($corn,$d);
-  if($a){
-    ?>
-    <script>
-    Swal.fire({
-        icon: 'success',
-        title: 'Registration Successful!',
-        text: 'You will now be redirected to login page.\nEmail:<?php echo $email; ?>\nPassword:<?php echo $pass1; ?>',
-        //html: ''
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'OK'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            window.location = "login.php";
-        }
-    });
-</script>
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $conn = mysqli_connect("localhost", "root", "", "smartstudy");
+    extract($_POST);
 
-      <?php
-  }
-  else{
-    ?>
-    <script>
-        alert("Not Registered");
-        window.location ="registeration.php";
-        </script>
-        <?php
-  }
+    $sql = "INSERT INTO registration(fname, class, age, email, gender, pass1) 
+            VALUES('$fname', '$class', '$age', '$email', '$gender', '$pass1')";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result) {
+        // log activity
+        logActivity($conn, $email, "Registered");
+
+        echo "
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Registration Successful!',
+                html: 'You will now be redirected to login page.<br><b>Email:</b> $email <br><b>Password:</b> $pass1',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = 'login.php';
                 }
-
+            });
+        </script>
+        ";
+    } else {
+        echo "
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Registration Failed',
+                text: 'Please try again later!',
+                confirmButtonColor: '#d33'
+            }).then(() => {
+                window.location = 'registration.php';
+            });
+        </script>
+        ";
+    }
+}
 ?>
+
         </form>
     
 </body>
